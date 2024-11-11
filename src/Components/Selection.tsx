@@ -9,9 +9,11 @@ interface Option {
 
 type SelectProps = {
     title?: string;
+    value?: any;
+    onChange: (value: string) => void;
 }
 
-const CustomSelect: FC<SelectProps> = ({ title }) => {
+const CustomSelect: FC<SelectProps> = ({ title ,value ,onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
 
@@ -22,9 +24,15 @@ const CustomSelect: FC<SelectProps> = ({ title }) => {
     { value: 'option3', label: 'Opção 3' },
   ];
 
+  const handleOptionClick = (option: Option) => {
+    setSelectedOption(option);
+    onChange(option.value);
+    setIsOpen(false);
+  };
+
   return (
     <div className="relative w-full my-4">
-        <label className='text-[.85rem] text-bold'>{title}</label>
+        <label className='text-[.85rem] font-medium'>{title}</label>
       {/* Botão do Select */}
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -58,6 +66,7 @@ const CustomSelect: FC<SelectProps> = ({ title }) => {
               onClick={() => {
                 setSelectedOption(option);
                 setIsOpen(false);
+                handleOptionClick(option)
               }}
               className="
                 px-4

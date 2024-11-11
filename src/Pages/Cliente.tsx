@@ -542,7 +542,11 @@ export const Cliente: FC<ClienteProps> = ({ title }) => {
 
                 {/* Botão */}
                 <div className='w-36 mt-12'>
-                    <Button label='Adicionar' handleFunction={() => { }} className='w-36 h-11 text-secondary border-2 border-secondary rounded-sm hover:bg-secondary hover:text-white transition-all' />
+                    <Button
+                    type={'submit'}
+                    label='Adicionar' 
+                    handleFunction={() => { }} 
+                    className='w-36 h-11 text-secondary border-2 border-secondary rounded-sm hover:bg-secondary hover:text-white transition-all' />
                 </div>
 
             </div>

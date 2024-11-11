@@ -4,7 +4,7 @@ interface InputProps {
   type: string,
   placeholder?: string,
   icon?: ReactNode,
-  value?: string,
+  value?: any,
   onChange?: any,
   label?: string,
   name?: string,
