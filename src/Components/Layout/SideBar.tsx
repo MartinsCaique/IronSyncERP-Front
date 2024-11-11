@@ -1,18 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillAppstore } from "react-icons/ai";
 import { CiLogout } from "react-icons/ci";
 
 
 import logo from "../../Assets/logo.png"
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "../Button";
 
 export const SideBar = () => {
-    const [activeLink, setActiveLink] = useState("dashboard1");
+    const [activeLink, setActiveLink] = useState("dashboard1")
+    const location = useLocation()
 
-    const isActive = (link: string) => {
-        return activeLink === link;
-    };
+    useEffect(()=> {
+        // Atualiza o activeLink
+        if (location.pathname === '/') {
+            setActiveLink('dashboard1')
+        } else if (location.pathname === '/cadastro') {
+            setActiveLink('dashboard2')
+        }
+    }, [location])
+
+    const isActive = (link: string) => activeLink === link
 
     return (
         <div className="h-[100%] w-[16.6rem] bg-white flex flex-col items-center">
