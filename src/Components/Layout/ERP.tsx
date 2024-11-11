@@ -1,5 +1,5 @@
-import React, { FC } from 'react'
-import { SideBar } from './SideBar'
+import React, { FC } from 'react';
+import { SideBar } from './SideBar';
 import Header from './Header';
 
 // Propriedades do Header
@@ -15,17 +15,15 @@ type ERPProps = HeaderProps & {
 const ERP: FC<ERPProps> = ({ path, children }) => {
   return (
     <div className='flex'>
-      {/* witdh = 267px 16.6rem /> */}
-
       <div className="flex min-h-screen w-full">
-            <SideBar />
-            <div className="flex-1">
-                <Header path={path} />
-                {children}
-            </div>
+        <SideBar />
+        <div className="flex-1">
+          <Header path={path} />
+          {children}
         </div>
+      </div>
     </div>
   )
 }
 
-export default ERP  
+export default ERP;

@@ -1,7 +1,7 @@
 import { FC, useState } from "react"
-import { Input } from "../Components/Input"
-import { Button } from "../Components/Button"
-import { Divider } from "../Components/Divider"
+import { Input } from "../../Components/Input"
+import { Button } from "../../Components/Button"
+import { Divider } from "../../Components/Divider"
 
 
 type MaterialProps = {
@@ -24,7 +24,7 @@ interface FormErrors {
     descricao?: string;
 }
 
-export const Material: FC<MaterialProps> = ({ title }) => {
+export const MaterialCadastro: FC<MaterialProps> = ({ title }) => {
     const [formData, setFormData] = useState<FormData>({
         nome: "",
         preco: "",

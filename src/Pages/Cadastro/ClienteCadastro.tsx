@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
-import { Input } from '../Components/Input'
-import { Button } from '../Components/Button'
-import { Divider } from '../Components/Divider'
+import { Input } from '../../Components/Input'
+import { Button } from '../../Components/Button'
+import { Divider } from '../../Components/Divider'
 
 type ClienteProps = {
     title: string
@@ -22,7 +22,7 @@ interface CepResponse {
 }
 
 
-export const Cliente: FC<ClienteProps> = ({ title }) => {
+export const ClienteCadastro: FC<ClienteProps> = ({ title }) => {
 
     const [submitError, setSubmitError] = useState<string | null>(null)
     const [isLoadingCep, setIsLoadingCep] = useState(false)

@@ -1,10 +1,10 @@
 import { ChangeEvent, FC, useState } from "react"
-import { Input } from "../Components/Input"
-import CustomSelect from "../Components/Selection"
+import { Input } from "../../Components/Input"
+import CustomSelect from "../../Components/Selection"
 import { FaArrowDown, FaTrash } from "react-icons/fa"
-import { Button } from "../Components/Button"
+import { Button } from "../../Components/Button"
 import { FaPlus } from "react-icons/fa6"
-import { Divider } from "../Components/Divider"
+import { Divider } from "../../Components/Divider"
 
 
 type OrcamentoProps = {
@@ -32,7 +32,7 @@ type Recurso = {
 };
 
 
-export const Orcamento: FC<OrcamentoProps> = ({ title }) => {
+export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
   const [orcamentoName, setOrcamentoName] = useState('');
   const [empresa, setEmpresa] = useState('');
   const [contato, setContato] = useState('');

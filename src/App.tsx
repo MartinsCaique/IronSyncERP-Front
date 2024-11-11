@@ -1,11 +1,16 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { Login } from "./Pages/Login"
 import Cadastro from "./Components/Layout/Cadastro"
-import { Cliente } from "./Pages/Cliente"
-import { Material } from "./Pages/Material"
-import { Orcamento } from "./Pages/Orcamento"
-import { Recurso } from "./Pages/Recurso"
+import { ClienteCadastro } from "./Pages/Cadastro/ClienteCadastro"
+import { MaterialCadastro } from "./Pages/Cadastro/MaterialCadastro"
+import { OrcamentoCadastro } from "./Pages/Cadastro/OrcamentoCadastro"
+import { RecursoCadastro } from "./Pages/Cadastro/RecursoCadastro"
 import { Dashboard } from "./Pages/Dashboard"
+import Listas from "./Components/Layout/Listas"
+import { ClienteListas } from "./Pages/Listas/ClienteListas"
+import { MaterialListas } from "./Pages/Listas/MaterialListas"
+import { RecursoListas } from "./Pages/Listas/RecursoListas"
+import { OrcamentoListas } from "./Pages/Listas/OrcamentoListas"
 
 function App() {
 
@@ -18,10 +23,18 @@ function App() {
 
           {/* Rotas Cadastro */}
           <Route path='/cadastro' element={<Cadastro path='cadastros' />} >
-            <Route path='cliente' element={<Cliente title='Novo Cliente' />} />
-            <Route path='material' element={<Material title='Novo Material' />} />
-            <Route path='recurso' element={<Recurso title='Novo Recurso' />} />
-            <Route path='orcamento' element={<Orcamento title='Novo Orçamento' />} />
+            <Route path='cliente' element={<ClienteCadastro title='Novo Cliente' />} />
+            <Route path='material' element={<MaterialCadastro title='Novo Material' />} />
+            <Route path='recurso' element={<RecursoCadastro title='Novo Recurso' />} />
+            <Route path='orcamento' element={<OrcamentoCadastro title='Novo Orçamento' />} />
+          </Route>
+
+          {/* Rotas Listas */}
+          <Route path='/listas' element={<Listas path='listas' />} >
+            <Route path='cliente' element={<ClienteListas title='Lista Cliente' />} />
+            <Route path='material' element={<MaterialListas title='Lista Material' />} />
+            <Route path='recurso' element={<RecursoListas title='Lista Recurso' />} />
+            <Route path='orcamento' element={<OrcamentoListas title='Lista Orçamento' />} />
           </Route>
         </Routes>
       </BrowserRouter>

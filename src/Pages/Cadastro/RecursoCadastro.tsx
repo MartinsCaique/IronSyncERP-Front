@@ -1,13 +1,13 @@
 import { ChangeEvent, FC, useState } from 'react'
-import { Input } from '../Components/Input'
-import { Button } from '../Components/Button'
-import { Divider } from '../Components/Divider'
+import { Input } from '../../Components/Input'
+import { Button } from '../../Components/Button'
+import { Divider } from '../../Components/Divider'
 
 type RecursoProps = {
     title: string
 }
 
-export const Recurso: FC<RecursoProps> = ({ title }) => {
+export const RecursoCadastro: FC<RecursoProps> = ({ title }) => {
     const [operation, setOperation] = useState('');
     const [pricePerHour, setPricePerHour] = useState('');
     const [description, setDescription] = useState('');
