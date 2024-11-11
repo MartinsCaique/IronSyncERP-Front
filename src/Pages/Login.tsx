@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { Input } from '../Components/Input'
 import { MdEmail } from 'react-icons/md'
 import { CiLock } from 'react-icons/ci'
@@ -11,14 +11,6 @@ export const Login = () => {
     const [errorMessage, setErrorMessage] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
-    // Função para ver se já tem um token no local storage
-    useEffect(() => {
-        const token = localStorage.getItem('token')
-        if (token) {
-            alert('Já existe um token')
-        }
-    }, [])
-
     // Função para mandar api
     const handleLogin = async (e: FormEvent) => {
         e.preventDefault()
@@ -26,7 +18,10 @@ export const Login = () => {
         setErrorMessage('')
 
         try {
-            const response = await fetch('http://localhost:8000/api/admin/register', {
+
+            // await getCsrfToken()
+
+            const response = await fetch('http://127.0.0.1:8000/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -35,10 +30,10 @@ export const Login = () => {
             })
 
             const data = await response.json()
+            console.log(data); 
 
             if (response.ok) {
                 localStorage.setItem('token', data.token)
-                setErrorMessage('Login bem-sucedido')
             } else {
                 setErrorMessage(data.message || 'Erro ao realizar login. Verifique suas credenciais.')
             }
