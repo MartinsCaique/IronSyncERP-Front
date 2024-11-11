@@ -166,7 +166,7 @@ export const Orcamento: FC<OrcamentoProps> = ({ title }) => {
                       onClick={() => removeFerramenta(ferramentaIndex)}
                       className="ml-4 text-red-500 hover:text-red-700"
                     >
-                      <FaTrash />
+                      <FaTrash size={20} />
                     </button>
                   </div>
                 </div>
@@ -209,7 +209,7 @@ export const Orcamento: FC<OrcamentoProps> = ({ title }) => {
                           onClick={() => removePeca(ferramentaIndex, pecaIndex)}
                           className="ml-4 text-red-500 hover:text-red-700"
                         >
-                          <FaTrash />
+                          <FaTrash size={20} />
                         </button>
                       </div>
                     </div>
@@ -308,13 +308,13 @@ export const Orcamento: FC<OrcamentoProps> = ({ title }) => {
                               }}
                             />
                           </div>
-                          <div className="ml-4">
+                          <div className="ml-4 mt-5 flex items-center">
                             <button
                               type="button"
                               onClick={() => removeRecurso(ferramentaIndex, pecaIndex, recursoIndex)}
                               className="text-red-500 hover:text-red-700"
                             >
-                              <FaTrash />
+                              <FaTrash size={20} />
                             </button>
                           </div>
                         </div>

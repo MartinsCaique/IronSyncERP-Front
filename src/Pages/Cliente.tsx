@@ -24,8 +24,9 @@ interface CepResponse {
 
 export const Cliente: FC<ClienteProps> = ({ title }) => {
 
-    const [submitError, setSubmitError] = useState<string | null>(null);
-    const [isLoadingCep, setIsLoadingCep] = useState(false);
+    const [submitError, setSubmitError] = useState<string | null>(null)
+    const [isLoadingCep, setIsLoadingCep] = useState(false)
+    const [isCepFilled, setIsCepFilled] = useState(false)
 
     const [form, setForm] = useState({
         cnpj: '',
@@ -87,6 +88,9 @@ export const Cliente: FC<ClienteProps> = ({ title }) => {
                 pais: 'Brasil'
             }));
 
+            // Define o estado para desabilitar campos preenchidos automaticamente
+            setIsCepFilled(true);
+
             // Remove erro do CEP se existir
             if (errors.cep) {
                 setErrors(prev => {
@@ -109,7 +113,7 @@ export const Cliente: FC<ClienteProps> = ({ title }) => {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
-        // Remove error when user starts typing
+        // Remova o erro quando o usuário começar a digitar
         if (errors[name]) {
             setErrors(prev => {
                 const newErrors = { ...prev };
@@ -118,7 +122,7 @@ export const Cliente: FC<ClienteProps> = ({ title }) => {
             });
         }
 
-        // Format inputs while typing
+        // Formatar entradas enquanto digita
         let formattedValue = value;
         switch (name) {
             case 'cnpj':
@@ -415,7 +419,6 @@ export const Cliente: FC<ClienteProps> = ({ title }) => {
                                     value={form.pais}
                                     onChange={handleChange}
                                     error={errors.pais}
-                                    disabled={true}
                                 />
                             </div>
 
@@ -428,7 +431,7 @@ export const Cliente: FC<ClienteProps> = ({ title }) => {
                                     value={form.estado}
                                     onChange={handleChange}
                                     error={errors.estado}
-                                    disabled={isLoadingCep}
+                                    disabled={isLoadingCep || isCepFilled}
                                 />
                             </div>
                         </div>
@@ -443,7 +446,7 @@ export const Cliente: FC<ClienteProps> = ({ title }) => {
                                     value={form.cidade}
                                     onChange={handleChange}
                                     error={errors.cidade}
-                                    disabled={isLoadingCep}
+                                    disabled={isLoadingCep || isCepFilled}
                                 />
                             </div>
 
@@ -456,7 +459,7 @@ export const Cliente: FC<ClienteProps> = ({ title }) => {
                                     value={form.bairro}
                                     onChange={handleChange}
                                     error={errors.bairro}
-                                    disabled={isLoadingCep}
+                                    disabled={isLoadingCep || isCepFilled}
                                 />
                             </div>
                         </div>
@@ -471,7 +474,7 @@ export const Cliente: FC<ClienteProps> = ({ title }) => {
                                     value={form.logradouro}
                                     onChange={handleChange}
                                     error={errors.logradouro}
-                                    disabled={isLoadingCep}
+                                    disabled={isLoadingCep || isCepFilled}
                                 />
                             </div>
 

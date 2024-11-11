@@ -19,7 +19,7 @@ export const Input: FC<InputProps> = ({ type, placeholder = '', icon, value = ''
   return (
     <>
       <p className='text-[.85rem] font-medium'>{label}</p>
-      <label className='h-9 flex items-center justify-center border border-gray-300 rounded-sm p-2 bg-white'>
+      <label className={`h-9 flex items-center justify-center border border-gray-300 rounded-sm p-2 bg-white ${disabled ? 'bg-gray-200 cursor-not-allowed' : 'bg-white'}`}>
         {icon && <span className='ml-3 mr-2 text-gray-400'>{icon}</span>}
         <input
           id={name}
@@ -30,7 +30,7 @@ export const Input: FC<InputProps> = ({ type, placeholder = '', icon, value = ''
           placeholder={placeholder}
           disabled={disabled}
           style={{ fontSize: '12px' }}
-          className={`${width ? width : ''} flex-1 bg-transparent border-transparent focus-within:border-transparent outline-none focus:ring-0 ${disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-white'}`}
+          className={`${width ? width : ''} flex-1 bg-transparent border-transparent focus-within:border-transparent outline-none focus:ring-0`}
         />
         {error && (
           <span className="text-red-500 text-xs mt-1">{error}</span>
