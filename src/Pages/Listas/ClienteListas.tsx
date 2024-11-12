@@ -1,12 +1,54 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { Divider } from '../../Components/Divider'
 
 type ClienteProps = {
     title: string
 }
 
-export const ClienteListas: FC<ClienteProps> = ({ title }) => {
+type Cliente = {
+    razaoSocial: string;
+    contatoNome: string;
+    email: string;
+    cnpj: string;
+    telefone: string;
+};
 
+export const ClienteListas: FC<ClienteProps> = ({ title }) => {
+    const [clientes, setClientes] = useState<Cliente[]>([]);
+
+    // Função para buscar dados dos clientes
+    const fetchClientes = async () => {
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/clientes/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+    
+            // Verifica se a resposta está OK
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.status}`);
+            }
+    
+            // Verifica se a resposta tem conteúdo antes de chamar response.json()
+            const text = await response.text();
+            if (!text) {
+                console.error("Resposta da API está vazia.");
+                return;
+            }
+    
+            // Converte para JSON
+            const data = JSON.parse(text);
+            setClientes(data);
+        } catch (error) {
+            console.error("Erro ao buscar clientes:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchClientes();
+    }, []);
 
     return (
         <div className="my-4 mx-8 bg-white">
@@ -23,27 +65,26 @@ export const ClienteListas: FC<ClienteProps> = ({ title }) => {
                 {/* Divider */}
                 <Divider />
 
-                {/* Lista */}
-                <div className='h-12 w-full mt-6 bg-primary flex justify-around items-center text-white rounded-sm'>
-                    <div>
-                        <h3>Razão Social</h3>
-                    </div>
-                    <div>
-                        <h3>Cargo</h3>
-                    </div>
-                    <div>
-                        <h3>E-mail</h3>
-                    </div>
-                    <div>
-                        <h3>CNPJ</h3>
-                    </div>
-                    <div>
-                        <h3>Telefone</h3>
-                    </div>
+                {/* Cabeçalho */}
+                <div className='grid grid-cols-5 h-12 w-full mt-6 bg-primary text-white rounded-sm text-center items-center'>
+                    <div>Razão Social</div>
+                    <div>Cargo</div>
+                    <div>E-mail</div>
+                    <div>CNPJ</div>
+                    <div>Telefone</div>
                 </div>
-                {/* .Map para fazer a lista */}
-                <div>
 
+                {/* Lista */}
+                <div>
+                    {clientes.map((cliente, index) => (
+                        <div key={index} className='grid grid-cols-5 h-12 w-full items-center border-b border-gray-200 text-center'>
+                            <div>{cliente.razaoSocial}</div>
+                            <div>{cliente.contatoNome}</div>
+                            <div>{cliente.email}</div>
+                            <div>{cliente.cnpj}</div>
+                            <div>{cliente.telefone}</div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

@@ -241,10 +241,13 @@ export const ClienteCadastro: FC<ClienteProps> = ({ title }) => {
 
 
         try {
-            const response = await fetch('YOUR_API_ENDPOINT/clientes', {
+            const response = await fetch('http://127.0.0.1:8000/api/clientes/', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'XSRF-TOKEN': getCookie('XSRF-TOKEN') ?? '',
                     // Add any authentication headers if needed
                     // 'Authorization': `Bearer ${token}`,
                 },
@@ -281,6 +284,25 @@ export const ClienteCadastro: FC<ClienteProps> = ({ title }) => {
         } finally {
         }
     };
+
+    const getCSRFToken = async () => {
+        try {
+            await fetch('http://127.0.0.1:8000/sanctum/csrf-cookie', {
+                credentials: 'include',
+            });
+        } catch (error) {
+            console.error('Erro ao obter CSRF token:', error);
+        }
+    };
+    
+    const getCookie = (name: string): string | null => {
+        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        if (match) return decodeURIComponent(match[2]);
+        return null;
+    };
+
+    // Uso:
+    const token = getCookie('XSRF-TOKEN');
 
     return (
         <form onSubmit={handleSubmit} className="my-4 mx-8 bg-white">
@@ -546,10 +568,10 @@ export const ClienteCadastro: FC<ClienteProps> = ({ title }) => {
                 {/* Botão */}
                 <div className='w-36 mt-12'>
                     <Button
-                    type={'submit'}
-                    label='Adicionar' 
-                    handleFunction={() => { }} 
-                    className='w-36 h-11 text-secondary border-2 border-secondary rounded-sm hover:bg-secondary hover:text-white transition-all' />
+                        type={'submit'}
+                        label='Adicionar'
+                        handleFunction={() => { }}
+                        className='w-36 h-11 text-secondary border-2 border-secondary rounded-sm hover:bg-secondary hover:text-white transition-all' />
                 </div>
 
             </div>
