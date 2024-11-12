@@ -64,19 +64,19 @@ export const Dashboard: FC<DashboardProps> = ({ path }) => {
                             <h3 className='text-black text-3xl font-semibold ml-20 '>Acesso Rápido</h3>
 
                             <div className='flex mx-24 text-lg justify-around'>
-                                <Link to={"/Cadastro/cliente"} className='mt-6 border flex items-center bg-secondary py-2 px-4 text-white transition-all hover:bg-white hover:border hover:border-secondary hover:text-secondary'>
+                                <Link to={"/Cadastro/cliente"} className='mt-6 border flex items-center bg-primary py-2 px-4 text-white transition-all hover:bg-white hover:border hover:border-primary hover:text-primary'>
                                     <IoPersonAddSharp className='mr-4' />
                                     Novo Cliente
                                 </Link>
-                                <Link to={"/Cadastro/material"} className='mt-6 border flex items-center bg-secondary py-2 px-4 text-white transition-all hover:bg-white hover:border hover:border-secondary hover:text-secondary'>
+                                <Link to={"/Cadastro/material"} className='mt-6 border flex items-center bg-primary py-2 px-4 text-white transition-all hover:bg-white hover:border hover:border-primary hover:text-primary'>
                                     <BsBoxSeamFill className='mr-4' />
                                     Novo Material
                                 </Link>
-                                <Link to={"/Cadastro/recurso"} className='mt-6 border flex items-center bg-secondary py-2 px-4 text-white transition-all hover:bg-white hover:border hover:border-secondary hover:text-secondary'>
+                                <Link to={"/Cadastro/recurso"} className='mt-6 border flex items-center bg-primary py-2 px-4 text-white transition-all hover:bg-white hover:border hover:border-primary hover:text-primary'>
                                     <FaHammer className='mr-4' />
                                     Novo Recurso
                                 </Link>
-                                <Link to={"/Cadastro/orcamento"} className='mt-6 border flex items-center bg-secondary py-2 px-4 text-white transition-all hover:bg-white hover:border hover:border-secondary hover:text-secondary'>
+                                <Link to={"/Cadastro/orcamento"} className='mt-6 border flex items-center bg-primary py-2 px-4 text-white transition-all hover:bg-white hover:border hover:border-primary hover:text-primary'>
                                     <BsFillFileEarmarkSpreadsheetFill className='mr-4' />
                                     Novo Orcamento
                                 </Link>

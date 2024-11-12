@@ -79,7 +79,7 @@ const Header: FC<HeaderProps> = ({ path }) => {
               to={item.path} 
               className={`mr-10 lg:mr-20 mt-4 px-2 py-1 md:px-1 md:py-1 transition-colors
                 ${useLastPathLocation() === item.path.split("/").pop() 
-                  ? 'text-secondary font-bold border-b-2 border-secondary' 
+                  ? 'text-primary font-bold border-b-2 border-primary' 
                   : 'text-black/60 hover:text-black'
                 }
               `}

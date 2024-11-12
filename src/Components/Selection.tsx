@@ -31,7 +31,7 @@ const CustomSelect: FC<SelectProps> = ({ title ,value ,onChange }) => {
   };
 
   return (
-    <div className="relative w-full my-4">
+    <div className="relative w-full my-4 text-xs">
         <label className='text-[.85rem] font-medium'>{title}</label>
       {/* Botão do Select */}
       <button

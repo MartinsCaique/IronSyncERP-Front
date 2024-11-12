@@ -11,16 +11,17 @@ export const SideBar = () => {
     const [activeLink, setActiveLink] = useState("dashboard")
     const location = useLocation()
 
-    useEffect(()=> {
+    useEffect(() => {
+        const path = location.pathname.toLowerCase()
         // Atualiza o activeLink
-        if (location.pathname === '/') {
+        if (path === '/') {
             setActiveLink('dashboard')
-        } else if (location.pathname === '/cadastro') {
+        } else if (path.startsWith('/cadastro')) {
             setActiveLink('cadastro')
-        } else if (location.pathname === '/listas') {
+        } else if (path === '/listas') {
             setActiveLink('listas')
         }
-    }, [location])
+    }, [location.pathname])
 
     const isActive = (link: string) => activeLink === link
 
@@ -37,8 +38,8 @@ export const SideBar = () => {
                     <Link to={'/'}>
                         <Button
                             className={`flex items-center mb-2 space-x-3 p-3 rounded-r-lg w-full ${isActive('dashboard')
-                                    ? "bg-gray-100 text-secondary border-l-2 border-primary"
-                                    : "text-gray-500 hover:bg-gray-100 hover:text-secondary"
+                                ? "bg-gray-100 text-primary border-l-2 border-primary"
+                                : "text-gray-500 hover:bg-gray-100 hover:text-primary"
                                 }`}
                             handleFunction={() => setActiveLink("dashboard")}
                             icon={<AiFillAppstore size={25} />}
@@ -48,8 +49,8 @@ export const SideBar = () => {
                     <Link to='/cadastro'>
                         <Button
                             className={`flex items-center mb-2 space-x-3 p-3 rounded-r-lg w-full ${isActive('cadastro')
-                                    ? "bg-gray-100 text-secondary border-l-2 border-primary"
-                                    : "text-gray-500 hover:bg-gray-100 hover:text-secondary"
+                                ? "bg-gray-100 text-primary border-l-2 border-primary"
+                                : "text-gray-500 hover:bg-gray-100 hover:text-primary"
                                 }`}
                             handleFunction={() => setActiveLink("cadastro")}
                             icon={<AiFillAppstore size={25} />}
@@ -59,8 +60,8 @@ export const SideBar = () => {
                     <Link to='/listas'>
                         <Button
                             className={`flex items-center space-x-3 p-3 rounded-r-lg w-full ${isActive('listas')
-                                    ? "bg-gray-100 text-secondary border-l-2 border-primary"
-                                    : "text-gray-500 hover:bg-gray-100 hover:text-secondary"
+                                ? "bg-gray-100 text-primary border-l-2 border-primary"
+                                : "text-gray-500 hover:bg-gray-100 hover:text-primary"
                                 }`}
                             handleFunction={() => setActiveLink("listas")}
                             icon={<AiFillAppstore size={25} />}

@@ -24,9 +24,24 @@ export const OrcamentoListas: FC<OrcamentoProps> = ({ title }) => {
 
         <Divider />
 
-        <div className="py-8">
-          <h3 className="text-[1.25rem] font-semibold">Insira os Dados</h3>
+        {/* Lista */}
+        <div className='h-12 w-full mt-6 bg-primary flex justify-around items-center text-white rounded-sm'>
+          <div>
+            <h3>Nome do Orçamento</h3>
+          </div>
+          <div>
+            <h3>Empresa</h3>
+          </div>
+          <div>
+            <h3>Data</h3>
+          </div>
         </div>
+        
+        {/* .Map para fazer a lista */}
+        <div>
+
+        </div>
+
       </div>
     </div>
   )

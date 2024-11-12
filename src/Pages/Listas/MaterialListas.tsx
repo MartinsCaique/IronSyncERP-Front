@@ -21,8 +21,27 @@ export const MaterialListas: FC<MaterialProps> = ({ title }) => {
                 {/* Divider */}
                 <Divider />
 
-                <div className="py-8">
-                    <h3 className="text-[1.25rem] font-semibold">Insira os Dados</h3>
+                {/* Lista */}
+                <div className='h-12 w-full mt-6 bg-primary flex justify-around items-center text-white rounded-sm'>
+                    <div>
+                        <h3>Nome</h3>
+                    </div>
+                    <div>
+                        <h3>Preço</h3>
+                    </div>
+                    <div>
+                        <h3>Descrição</h3>
+                    </div>
+                    <div>
+                        <h3>Especificação</h3>
+                    </div>
+                    <div>
+                        <h3>Origem</h3>
+                    </div>
+                </div>
+                {/* .Map para fazer a lista */}
+                <div>
+                    
                 </div>
             </div>
         </div>

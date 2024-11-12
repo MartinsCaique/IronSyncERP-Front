@@ -23,8 +23,27 @@ export const ClienteListas: FC<ClienteProps> = ({ title }) => {
                 {/* Divider */}
                 <Divider />
 
-                <div className="py-8">
-                    <h3 className="text-[1.25rem] font-semibold">Insira os Dados</h3>
+                {/* Lista */}
+                <div className='h-12 w-full mt-6 bg-primary flex justify-around items-center text-white rounded-sm'>
+                    <div>
+                        <h3>Razão Social</h3>
+                    </div>
+                    <div>
+                        <h3>Cargo</h3>
+                    </div>
+                    <div>
+                        <h3>E-mail</h3>
+                    </div>
+                    <div>
+                        <h3>CNPJ</h3>
+                    </div>
+                    <div>
+                        <h3>Telefone</h3>
+                    </div>
+                </div>
+                {/* .Map para fazer a lista */}
+                <div>
+
                 </div>
             </div>
         </div>
