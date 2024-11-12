@@ -91,7 +91,7 @@ export const RecursoCadastro: FC<RecursoProps> = ({ title }) => {
                         <div className='w-[80%] ml-4'>
                             <Input
                                 type='text'
-                                label='Preço/Hora'
+                                label='*Preço/Hora'
                                 value={pricePerHour}
                                 onChange={(e: ChangeEvent<HTMLInputElement>) => setPricePerHour(e.target.value)}
                             />

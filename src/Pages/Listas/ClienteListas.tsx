@@ -68,7 +68,7 @@ export const ClienteListas: FC<ClienteProps> = ({ title }) => {
                 {/* Cabeçalho */}
                 <div className='grid grid-cols-5 h-12 w-full mt-6 bg-primary text-white rounded-sm text-center items-center'>
                     <div>Razão Social</div>
-                    <div>Cargo</div>
+                    <div>Contato</div>
                     <div>E-mail</div>
                     <div>CNPJ</div>
                     <div>Telefone</div>

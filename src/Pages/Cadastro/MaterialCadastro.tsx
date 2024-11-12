@@ -152,7 +152,7 @@ export const MaterialCadastro: FC<MaterialProps> = ({ title }) => {
                         <div className='w-[80%] ml-4'>
                             <Input
                                 type='text'
-                                label='Preço (por kg)'
+                                label='*Preço (por kg)'
                                 value={formData.preco}
                                 onChange={handleInputChange("preco")}
                                 error={errors.preco}
