@@ -241,15 +241,18 @@ export const Cliente: FC<ClienteProps> = ({ title }) => {
 
 
         try {
-            const response = await fetch('YOUR_API_ENDPOINT/clientes', {
+            let response = await fetch('http://localhost:8000/api/clientes', {
                 method: 'POST',
                 headers: {
+                    'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     // Add any authentication headers if needed
                     // 'Authorization': `Bearer ${token}`,
                 },
-                body: JSON.stringify(form)
+                body: JSON.stringify(form),
             });
+            response = await response.json();
+            console.log(response)
 
             if (!response.ok) {
                 throw new Error(`Erro ${response.status}: ${response.statusText}`);
