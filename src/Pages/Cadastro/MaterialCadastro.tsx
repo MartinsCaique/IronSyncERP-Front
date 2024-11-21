@@ -95,10 +95,12 @@ export const MaterialCadastro: FC<MaterialProps> = ({ title }) => {
         setIsSubmitting(true)
 
         try {
-            const response = await fetch("sua-url-api/materiais", {
+            const response = await fetch("http://127.0.0.1:8000/api/materiais", {
                 method: "POST",
+                credentials: 'include',
                 headers: {
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                 },
                 body: JSON.stringify({
                     ...formData,
