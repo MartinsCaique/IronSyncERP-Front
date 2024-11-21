@@ -1,11 +1,53 @@
-import { FC } from "react"
+import { FC, useEffect, useState } from "react"
 import { Divider } from "../../Components/Divider"
 
 type MaterialProps = {
     title: string
 }
 
+type Material = {
+    nome: string;
+    preco: string;
+    especificacaoTecnica: string;
+    origem: string;
+    descricao: string;
+};
+
 export const MaterialListas: FC<MaterialProps> = ({ title }) => {
+    const [materiais, setMateriais] = useState<Material[]>([]);
+
+    const fetchMateriais = async () => {
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/materiais/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            // Verifica se a resposta está OK
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.status}`);
+            }
+
+            // Verifica se a resposta tem conteúdo antes de chamar response.json()
+            const text = await response.text();
+            if (!text) {
+                console.error("Resposta da API está vazia.");
+                return;
+            }
+
+            // Converte para JSON
+            const data = JSON.parse(text);
+            setMateriais(data);
+        } catch (error) {
+            console.error("Erro ao buscar clientes:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchMateriais();
+    }, []);
 
     return (
         <div className="my-4 mx-8 bg-white">
@@ -30,18 +72,26 @@ export const MaterialListas: FC<MaterialProps> = ({ title }) => {
                         <h3>Preço</h3>
                     </div>
                     <div>
-                        <h3>Descrição</h3>
-                    </div>
-                    <div>
                         <h3>Especificação</h3>
                     </div>
                     <div>
                         <h3>Origem</h3>
                     </div>
+                    <div>
+                        <h3>Descrição</h3>
+                    </div>
                 </div>
-                {/* .Map para fazer a lista */}
+                    {materiais.map((material, index) => (
+                        <div key={index} className='grid grid-cols-5 h-12 w-full items-center border-b border-gray-200 text-center'>
+                            <div>{material.nome}</div>
+                            <div>{material.preco}</div>
+                            <div>{material.especificacaoTecnica}</div>
+                            <div>{material.origem}</div>
+                            <div>{material.descricao}</div>
+                        </div>
+                    ))}
                 <div>
-                    
+
                 </div>
             </div>
         </div>

@@ -8,16 +8,16 @@ type RecursoProps = {
 }
 
 interface RecursoFormData {
-    operation: string;
-    pricePerHour: string;
-    description: string;
+    operacao: string;
+    preco: string;
+    descricao: string;
 }
 
 export const RecursoCadastro: FC<RecursoProps> = ({ title }) => {
     const [formData, setFormData] = useState<RecursoFormData>({
-        operation: '',
-        pricePerHour: '',
-        description: ''
+        operacao: '',
+        preco: '',
+        descricao: ''
     });
 
     const handleInputChange = (field: keyof RecursoFormData) => (
@@ -26,7 +26,7 @@ export const RecursoCadastro: FC<RecursoProps> = ({ title }) => {
         const value = e.target.value;
 
         // Formata o valor do preço/hora para adicionar "R$" automaticamente
-        if (field === 'pricePerHour') {
+        if (field === 'preco') {
             const numericValue = value.replace(/[^\d,]/g, ''); // Permite apenas números e vírgula
             const formattedValue = `R$ ${numericValue}`;
             setFormData((prev) => ({ ...prev, [field]: formattedValue }));
@@ -38,13 +38,13 @@ export const RecursoCadastro: FC<RecursoProps> = ({ title }) => {
     const handleSubmit = async () => {
         try {
             // Validações
-            if (!formData.operation.trim()) {
+            if (!formData.operacao.trim()) {
                 alert('Por favor, preencha o campo Operação.');
                 return;
             }
 
             const numericPrice = parseFloat(
-                formData.pricePerHour.replace('R$', '').replace(',', '.').trim()
+                formData.preco.replace('R$', '').replace(',', '.').trim()
             );
 
             if (isNaN(numericPrice) || numericPrice < 0) {
@@ -59,18 +59,18 @@ export const RecursoCadastro: FC<RecursoProps> = ({ title }) => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    operation: formData.operation,
-                    pricePerHour: numericPrice,
-                    description: formData.description
+                    operacao: formData.operacao,
+                    preco: numericPrice,
+                    descricao: formData.descricao
                 })
             });
 
             if (response.ok) {
                 alert('Recurso adicionado com sucesso!');
                 setFormData({
-                    operation: '',
-                    pricePerHour: '',
-                    description: ''
+                    operacao: '',
+                    preco: '',
+                    descricao: ''
                 });
             } else {
                 alert('Ocorreu um erro ao adicionar o recurso. Por favor, tente novamente.');
@@ -113,8 +113,8 @@ export const RecursoCadastro: FC<RecursoProps> = ({ title }) => {
                             <Input
                                 type="text"
                                 label="*Operação"
-                                value={formData.operation}
-                                onChange={handleInputChange('operation')}
+                                value={formData.operacao}
+                                onChange={handleInputChange('operacao')}
                             />
                         </div>
 
@@ -123,8 +123,8 @@ export const RecursoCadastro: FC<RecursoProps> = ({ title }) => {
                             <Input
                                 type="text"
                                 label="*Preço/Hora"
-                                value={formData.pricePerHour}
-                                onChange={handleInputChange('pricePerHour')}
+                                value={formData.preco}
+                                onChange={handleInputChange('preco')}
                             />
                         </div>
                     </div>
@@ -134,8 +134,8 @@ export const RecursoCadastro: FC<RecursoProps> = ({ title }) => {
                         <Input
                             type="text"
                             label="Descrição"
-                            value={formData.description}
-                            onChange={handleInputChange('description')}
+                            value={formData.descricao}
+                            onChange={handleInputChange('descricao')}
                         />
                     </div>
 
