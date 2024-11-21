@@ -7,20 +7,47 @@ type RecursoProps = {
     title: string
 }
 
+interface RecursoFormData {
+    operation: string;
+    pricePerHour: string;
+    description: string;
+}
+
 export const RecursoCadastro: FC<RecursoProps> = ({ title }) => {
-    const [operation, setOperation] = useState('');
-    const [pricePerHour, setPricePerHour] = useState('');
-    const [description, setDescription] = useState('');
+    const [formData, setFormData] = useState<RecursoFormData>({
+        operation: '',
+        pricePerHour: '',
+        description: ''
+    });
+
+    const handleInputChange = (field: keyof RecursoFormData) => (
+        e: ChangeEvent<HTMLInputElement>
+    ) => {
+        const value = e.target.value;
+
+        // Formata o valor do preço/hora para adicionar "R$" automaticamente
+        if (field === 'pricePerHour') {
+            const numericValue = value.replace(/[^\d,]/g, ''); // Permite apenas números e vírgula
+            const formattedValue = `R$ ${numericValue}`;
+            setFormData((prev) => ({ ...prev, [field]: formattedValue }));
+        } else {
+            setFormData((prev) => ({ ...prev, [field]: value }));
+        }
+    };
 
     const handleSubmit = async () => {
         try {
             // Validações
-            if (!operation.trim()) {
+            if (!formData.operation.trim()) {
                 alert('Por favor, preencha o campo Operação.');
                 return;
             }
 
-            if (isNaN(parseFloat(pricePerHour)) || parseFloat(pricePerHour) < 0) {
+            const numericPrice = parseFloat(
+                formData.pricePerHour.replace('R$', '').replace(',', '.').trim()
+            );
+
+            if (isNaN(numericPrice) || numericPrice < 0) {
                 alert('Por favor, insira um valor numérico válido para Preço/Hora.');
                 return;
             }
@@ -32,17 +59,19 @@ export const RecursoCadastro: FC<RecursoProps> = ({ title }) => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    operation,
-                    pricePerHour: parseFloat(pricePerHour),
-                    description
+                    operation: formData.operation,
+                    pricePerHour: numericPrice,
+                    description: formData.description
                 })
             });
 
             if (response.ok) {
                 alert('Recurso adicionado com sucesso!');
-                setOperation('');
-                setPricePerHour('');
-                setDescription('');
+                setFormData({
+                    operation: '',
+                    pricePerHour: '',
+                    description: ''
+                });
             } else {
                 alert('Ocorreu um erro ao adicionar o recurso. Por favor, tente novamente.');
             }
@@ -61,7 +90,9 @@ export const RecursoCadastro: FC<RecursoProps> = ({ title }) => {
                 </div>
                 <div>
                     {/* Details */}
-                    <p className="text-black/60 text-[.9rem]">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed eveniet quisquam voluptatem corrupti modi dolorum quo asperiores incidunt, doloribus dolores? Non obcaecati, quaerat molestias sed vitae perferendis nihil consequuntur esse?</p>
+                    <p className="text-black/60 text-[.9rem]">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed eveniet quisquam voluptatem corrupti modi dolorum quo asperiores incidunt, doloribus dolores? Non obcaecati, quaerat molestias sed vitae perferendis nihil consequuntur esse?
+                    </p>
                 </div>
                 {/* Divider */}
                 <Divider />
@@ -72,28 +103,28 @@ export const RecursoCadastro: FC<RecursoProps> = ({ title }) => {
 
                 <div>
                     {/* Texto */}
-                    <div className='mt-8 mb-8'>
+                    <div className="mt-8 mb-8">
                         <h1 className="text-2xl font-bold">Recurso</h1>
                     </div>
 
-                    <div className='flex w-full mt-4'>
+                    <div className="flex w-full mt-4">
                         {/* Operação */}
-                        <div className='w-[80%]'>
+                        <div className="w-[80%]">
                             <Input
-                                type='text'
-                                label='*Operação'
-                                value={operation}
-                                onChange={(e: ChangeEvent<HTMLInputElement>) => setOperation(e.target.value)}
+                                type="text"
+                                label="*Operação"
+                                value={formData.operation}
+                                onChange={handleInputChange('operation')}
                             />
                         </div>
 
                         {/* Preço/Hora */}
-                        <div className='w-[80%] ml-4'>
+                        <div className="w-[80%] ml-4">
                             <Input
-                                type='text'
-                                label='*Preço/Hora'
-                                value={pricePerHour}
-                                onChange={(e: ChangeEvent<HTMLInputElement>) => setPricePerHour(e.target.value)}
+                                type="text"
+                                label="*Preço/Hora"
+                                value={formData.pricePerHour}
+                                onChange={handleInputChange('pricePerHour')}
                             />
                         </div>
                     </div>
@@ -103,20 +134,21 @@ export const RecursoCadastro: FC<RecursoProps> = ({ title }) => {
                         <Input
                             type="text"
                             label="Descrição"
-                            value={description}
-                            onChange={(e: ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
+                            value={formData.description}
+                            onChange={handleInputChange('description')}
                         />
                     </div>
 
                     {/* Botão */}
-                    <div className='w-36 mt-12'>
-                        <Button 
-                        label='Adicionar' 
-                        handleFunction={handleSubmit} 
-                        className='w-36 h-11 text-secondary border-2 border-secondary rounded-sm hover:bg-secondary hover:text-white transition-all' />
+                    <div className="w-36 mt-12">
+                        <Button
+                            label="Adicionar"
+                            handleFunction={handleSubmit}
+                            className="w-36 h-11 text-secondary border-2 border-secondary rounded-sm hover:bg-secondary hover:text-white transition-all"
+                        />
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};

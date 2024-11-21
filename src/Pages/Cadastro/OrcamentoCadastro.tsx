@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useState } from "react"
 import { Input } from "../../Components/Input"
 import CustomSelect from "../../Components/Selection"
-import { FaArrowDown, FaTrash } from "react-icons/fa"
+import { FaTrash } from "react-icons/fa"
 import { Button } from "../../Components/Button"
 import { FaPlus } from "react-icons/fa6"
 import { Divider } from "../../Components/Divider"
@@ -160,13 +160,13 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                 <div className="py-4 flex">
                   <h1 className="text-2xl font-bold">Ferramenta</h1>
                   <div className="w-full flex justify-end items-center">
-                    <FaArrowDown />
+                    
                     <button
                       type="button"
                       onClick={() => removeFerramenta(ferramentaIndex)}
                       className="ml-4 text-red-500 hover:text-red-700"
                     >
-                      <FaTrash size={20} />
+                      <FaTrash size={15} />
                     </button>
                   </div>
                 </div>
@@ -203,13 +203,13 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                     <div className="py-4 flex">
                       <h1 className="text-2xl font-bold ml-7">Peça</h1>
                       <div className="w-full flex justify-end items-center mr-7">
-                        <FaArrowDown />
+                        
                         <button
                           type="button"
                           onClick={() => removePeca(ferramentaIndex, pecaIndex)}
                           className="ml-4 text-red-500 hover:text-red-700"
                         >
-                          <FaTrash size={20} />
+                          <FaTrash size={15} />
                         </button>
                       </div>
                     </div>
@@ -314,7 +314,7 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                               onClick={() => removeRecurso(ferramentaIndex, pecaIndex, recursoIndex)}
                               className="text-red-500 hover:text-red-700"
                             >
-                              <FaTrash size={20} />
+                              <FaTrash size={15} />
                             </button>
                           </div>
                         </div>

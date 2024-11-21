@@ -21,6 +21,25 @@ interface CepResponse {
     erro?: boolean;
 }
 
+interface FormState {
+    cnpj: string;
+    razaoSocial: string;
+    inscricaoEstadual: string;
+    email: string;
+    telefone: string;
+    cep: string;
+    pais: string;
+    estado: string;
+    cidade: string;
+    bairro: string;
+    logradouro: string;
+    numero: string;
+    contatoNome: string;
+    contatoCargo: string;
+    contatoSetor: string;
+    nomeFantasia: string;
+}
+
 
 export const ClienteCadastro: FC<ClienteProps> = ({ title }) => {
 
@@ -28,14 +47,14 @@ export const ClienteCadastro: FC<ClienteProps> = ({ title }) => {
     const [isLoadingCep, setIsLoadingCep] = useState(false)
     const [isCepFilled, setIsCepFilled] = useState(false)
 
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<FormState>({
         cnpj: '',
         razaoSocial: '',
         inscricaoEstadual: '',
         email: '',
         telefone: '',
         cep: '',
-        pais: 'Brasil', // Default para Brasil
+        pais: '',
         estado: '',
         cidade: '',
         bairro: '',
@@ -354,6 +373,7 @@ export const ClienteCadastro: FC<ClienteProps> = ({ title }) => {
                                     type='text'
                                     label='Nome Fantasia'
                                     name="nomeFantasia"
+                                    value={form.nomeFantasia}
                                     onChange={handleChange}
                                 />
                             </div>
