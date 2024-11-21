@@ -47,14 +47,6 @@ export const MaterialCadastro: FC<MaterialProps> = ({ title }) => {
             newErrors.preco = "Preço deve ser um número válido"
         }
 
-        if (!formData.especificacaoTecnica.trim()) {
-            newErrors.especificacaoTecnica = "Especificação técnica é obrigatória"
-        }
-
-        if (!formData.origem.trim()) {
-            newErrors.origem = "Origem é obrigatória"
-        }
-
         setErrors(newErrors)
         return Object.keys(newErrors).length === 0
     }
