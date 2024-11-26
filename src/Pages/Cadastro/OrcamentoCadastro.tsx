@@ -12,28 +12,28 @@ type OrcamentoProps = {
 }
 
 type Ferramenta = {
-  name: string;
-  quantity: number;
+  nome: string;
+  quantidade: number;
   pecas: Peca[];
 };
 
 type Peca = {
-  name: string;
-  quantity: number;
-  note: string;
+  nome: string;
+  quantidade: number;
+  nota: string;
   material: string;
-  weight: number;
+  peso: number;
   recursos: Recurso[];
 };
 
 type Recurso = {
   operation: string;
-  hours: number;
+  horas: number;
 };
 
 
 export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
-  const [orcamentoName, setOrcamentoName] = useState('');
+  const [orcamentonome, setOrcamentoNome] = useState('');
   const [empresa, setEmpresa] = useState('');
   const [contato, setContato] = useState('');
   const [ferramentas, setFerramentas] = useState<Ferramenta[]>([]);
@@ -41,7 +41,7 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
   const addFerramenta = () => {
     setFerramentas([
       ...ferramentas,
-      { name: '', quantity: 0, pecas: [] },
+      { nome: '', quantidade: 0, pecas: [] },
     ]);
   };
 
@@ -54,11 +54,11 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
   const addPeca = (index: number) => {
     const updatedFerramentas = [...ferramentas];
     updatedFerramentas[index].pecas.push({
-      name: '',
-      quantity: 0,
-      note: '',
+      nome: '',
+      quantidade: 0,
+      nota: '',
       material: '',
-      weight: 0,
+      peso: 0,
       recursos: [],
     });
     setFerramentas(updatedFerramentas);
@@ -74,7 +74,7 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
     const updatedFerramentas = [...ferramentas];
     updatedFerramentas[ferramentaIndex].pecas[pecaIndex].recursos.push({
       operation: '',
-      hours: 0,
+      horas: 0,
     });
     setFerramentas(updatedFerramentas);
   };
@@ -93,7 +93,7 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: orcamentoName,
+          nome: orcamentonome,
           empresa,
           contato,
           ferramentas,
@@ -133,8 +133,8 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
           <Input
             type="text"
             label="*Nome Orçamento"
-            value={orcamentoName}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setOrcamentoName(e.target.value)}
+            value={orcamentonome}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setOrcamentoNome(e.target.value)}
           />
 
           <div className="flex">
@@ -176,10 +176,10 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                     <Input
                       type="text"
                       label="*Nome"
-                      value={ferramenta.name}
+                      value={ferramenta.nome}
                       onChange={(e: ChangeEvent<HTMLInputElement>) => {
                         const updatedFerramentas = [...ferramentas];
-                        updatedFerramentas[ferramentaIndex].name = e.target.value;
+                        updatedFerramentas[ferramentaIndex].nome = e.target.value;
                         setFerramentas(updatedFerramentas);
                       }}
                     />
@@ -188,10 +188,10 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                     <Input
                       type="number"
                       label="*Quantidade"
-                      value={ferramenta.quantity}
+                      value={ferramenta.quantidade}
                       onChange={(e: ChangeEvent<HTMLInputElement>) => {
                         const updatedFerramentas = [...ferramentas];
-                        updatedFerramentas[ferramentaIndex].quantity = parseInt(e.target.value);
+                        updatedFerramentas[ferramentaIndex].quantidade = parseInt(e.target.value);
                         setFerramentas(updatedFerramentas);
                       }}
                     />
@@ -219,10 +219,10 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                         <Input
                           type="text"
                           label="*Nome"
-                          value={peca.name}
+                          value={peca.nome}
                           onChange={(e: ChangeEvent<HTMLInputElement>) => {
                             const updatedFerramentas = [...ferramentas];
-                            updatedFerramentas[ferramentaIndex].pecas[pecaIndex].name = e.target.value;
+                            updatedFerramentas[ferramentaIndex].pecas[pecaIndex].nome = e.target.value;
                             setFerramentas(updatedFerramentas);
                           }}
                         />
@@ -231,10 +231,10 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                         <Input
                           type="number"
                           label="*Quantidade"
-                          value={peca.quantity}
+                          value={peca.quantidade}
                           onChange={(e: ChangeEvent<HTMLInputElement>) => {
                             const updatedFerramentas = [...ferramentas];
-                            updatedFerramentas[ferramentaIndex].pecas[pecaIndex].quantity = parseInt(e.target.value);
+                            updatedFerramentas[ferramentaIndex].pecas[pecaIndex].quantidade = parseInt(e.target.value);
                             setFerramentas(updatedFerramentas);
                           }}
                         />
@@ -245,10 +245,10 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                       <Input
                         type="string"
                         label="Nota"
-                        value={peca.note}
+                        value={peca.nota}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => {
                           const updatedFerramentas = [...ferramentas];
-                          updatedFerramentas[ferramentaIndex].pecas[pecaIndex].note = e.target.value;
+                          updatedFerramentas[ferramentaIndex].pecas[pecaIndex].nota = e.target.value;
                           setFerramentas(updatedFerramentas);
                         }}
                       />
@@ -270,10 +270,10 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                         <Input
                           type="number"
                           label="*Pesos em kg"
-                          value={peca.weight}
+                          value={peca.peso}
                           onChange={(e:ChangeEvent<HTMLInputElement>) => {
                             const updatedFerramentas = [...ferramentas];
-                            updatedFerramentas[ferramentaIndex].pecas[pecaIndex].weight = parseFloat(e.target.value);
+                            updatedFerramentas[ferramentaIndex].pecas[pecaIndex].peso = parseFloat(e.target.value);
                             setFerramentas(updatedFerramentas);
                           }}
                         />
@@ -300,10 +300,10 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                             <Input
                               type="number"
                               label="*Quantidade de Horas"
-                              value={recurso.hours}
+                              value={recurso.horas}
                               onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                 const updatedFerramentas = [...ferramentas];
-                                updatedFerramentas[ferramentaIndex].pecas[pecaIndex].recursos[recursoIndex].hours = parseInt(e.target.value);
+                                updatedFerramentas[ferramentaIndex].pecas[pecaIndex].recursos[recursoIndex].horas = parseInt(e.target.value);
                                 setFerramentas(updatedFerramentas);
                               }}
                             />

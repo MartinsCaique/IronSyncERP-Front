@@ -64,8 +64,8 @@ export const MaterialListas: FC<MaterialProps> = ({ title }) => {
                 <Divider />
 
                 {/* Lista */}
-                <div className='h-12 w-full mt-6 bg-primary flex justify-around items-center text-white rounded-sm'>
-                    <div>
+                <div className='grid grid-cols-5 h-12 w-full mt-6 bg-primary text-white rounded-sm text-center items-center'>
+                    <div>h-12 w-full 
                         <h3>Nome</h3>
                     </div>
                     <div>
