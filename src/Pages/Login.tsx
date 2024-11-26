@@ -1,29 +1,44 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { Input } from '../Components/Input'
-import { MdEmail } from 'react-icons/md'
-import { CiLock } from 'react-icons/ci'
-import { Button } from '../Components/Button'
-import imageLogin from '../Assets/login/imageLogin.jpg'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { Input } from '../Components/Input';
+import { MdEmail } from 'react-icons/md';
+import { CiLock } from 'react-icons/ci';
+import { Button } from '../Components/Button';
+import imageLogin from '../Assets/login/imageLogin.jpg';
+
+// Interface para o payload de login
+interface LoginPayload {
+    email: string;
+    senha: string;
+}
+
+// Interface para a resposta da API
+interface ApiResponse {
+    token?: string;
+    message?: string;
+}
 
 export const Login = () => {
-    const [email, setEmail] = useState('')
-    const [senha, setSenha] = useState('')
-    const [errorMessage, setErrorMessage] = useState('')
-    const [isLoading, setIsLoading] = useState(false)
+    const [email, setEmail] = useState<string>('');
+    const [senha, setSenha] = useState<string>('');
+    const [errorMessage, setErrorMessage] = useState<string>('');
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    // Função para ver se já tem um token no local storage
+    // Função para verificar se já existe um token no localStorage
     useEffect(() => {
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem('token');
         if (token) {
-            alert('Já existe um token')
+            alert('Já existe um token');
         }
-    }, [])
+    }, []);
 
-    // Função para mandar api
+    // Função para realizar o login
     const handleLogin = async (e: FormEvent) => {
-        e.preventDefault()
-        setIsLoading(true)
-        setErrorMessage('')
+        e.preventDefault();
+        setIsLoading(true);
+        setErrorMessage('');
+
+        // Construir o payload do login
+        const payload: LoginPayload = { email, senha };
 
         try {
             const response = await fetch('http://localhost:8000/api/admin/register', {
@@ -31,23 +46,23 @@ export const Login = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, senha })
-            })
+                body: JSON.stringify(payload),
+            });
 
-            const data = await response.json()
+            const data: ApiResponse = await response.json();
 
-            if (response.ok) {
-                localStorage.setItem('token', data.token)
-                setErrorMessage('Login bem-sucedido')
+            if (response.ok && data.token) {
+                localStorage.setItem('token', data.token);
+                setErrorMessage('Login bem-sucedido');
             } else {
-                setErrorMessage(data.message || 'Erro ao realizar login. Verifique suas credenciais.')
+                setErrorMessage(data.message || 'Erro ao realizar login. Verifique suas credenciais.');
             }
         } catch (error) {
-            setErrorMessage('Erro de conexão com o servidor. Tente novamente mais tarde.')
+            setErrorMessage('Erro de conexão com o servidor. Tente novamente mais tarde.');
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
-    }
+    };
 
     return (
         <div className='h-[100vh] flex items-center'>
@@ -55,7 +70,7 @@ export const Login = () => {
                 <div className='flex justify-center items-center'>
                     <div className='w-[900px] h-[500px] bg-white rounded-md flex shadow-md'>
                         <div className='w-1/2 flex flex-col p-10'>
-                            {/* Texto Login  */}
+                            {/* Texto Login */}
                             <div>
                                 <h2 className='text-center text-2xl font-semibold capitalize mb-4'>Login</h2>
                             </div>
@@ -112,5 +127,5 @@ export const Login = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};

@@ -65,7 +65,7 @@ export const MaterialListas: FC<MaterialProps> = ({ title }) => {
 
                 {/* Lista */}
                 <div className='grid grid-cols-5 h-12 w-full mt-6 bg-primary text-white rounded-sm text-center items-center'>
-                    <div>h-12 w-full 
+                    <div>
                         <h3>Nome</h3>
                     </div>
                     <div>
