@@ -260,19 +260,23 @@ export const ClienteCadastro: FC<ClienteProps> = ({ title }) => {
 
 
         try {
+            const token = localStorage.getItem('token');
             const response = await fetch('http://127.0.0.1:8000/api/clientes/', {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                    'XSRF-TOKEN': getCookie('XSRF-TOKEN') ?? '',
+                    'Authorization': `Bearer ${token}`
                     // Add any authentication headers if needed
                     // 'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(form)
             });
 
+            if (response.status === 401) {
+                window.location.href = '/login'; // Redirecionar para a página de login
+            }
             if (!response.ok) {
                 throw new Error(`Erro ${response.status}: ${response.statusText}`);
             }
@@ -313,7 +317,7 @@ export const ClienteCadastro: FC<ClienteProps> = ({ title }) => {
             console.error('Erro ao obter CSRF token:', error);
         }
     };
-    
+
     const getCookie = (name: string): string | null => {
         const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
         if (match) return decodeURIComponent(match[2]);

@@ -7,7 +7,7 @@ import imageLogin from '../Assets/login/imageLogin.jpg'
 
 export const Login = () => {
     const [email, setEmail] = useState('')
-    const [senha, setSenha] = useState('')
+    const [password, setSenha] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
@@ -26,12 +26,12 @@ export const Login = () => {
         setErrorMessage('')
 
         try {
-            const response = await fetch('http://localhost:8000/api/admin/register', {
+            const response = await fetch('http://localhost:8000/api/admin/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, senha })
+                body: JSON.stringify({ email, password })
             })
 
             const data = await response.json()
@@ -79,7 +79,7 @@ export const Login = () => {
                                 <p className='text-sm ml-1 mb-2 font-medium'>Senha</p>
                                 <div>
                                     <Input
-                                        value={senha}
+                                        value={password}
                                         type='password'
                                         placeholder='Coloque sua senha'
                                         onChange={(e: ChangeEvent<HTMLInputElement>) => setSenha(e.target.value)}
