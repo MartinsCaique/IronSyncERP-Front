@@ -111,11 +111,11 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
 
   const fetchEmpresas = async () => {
     try {
-      const response = await fetch('/api/empresas');
+      const response = await fetch('http://localhost:8000/api/clientes');
       const data = await response.json();
       return data.map((empresa: any) => ({
         id: empresa.id,
-        label: empresa.nome
+        label: empresa.razaoSocial
       }));
     } catch (error) {
       console.error('Erro ao buscar empresas:', error);
@@ -126,11 +126,11 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
   // Exemplo de função para buscar contatos
   const fetchContatos = async () => {
     try {
-      const response = await fetch('/api/contatos');
+      const response = await fetch('http://localhost:8000/api/clientes');
       const data = await response.json();
       return data.map((contato: any) => ({
         id: contato.id,
-        label: contato.nome
+        label: contato.contatoNome
       }));
     } catch (error) {
       console.error('Erro ao buscar contatos:', error);
@@ -141,7 +141,7 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
   // Exemplo de função para buscar materiais
   const fetchMateriais = async () => {
     try {
-      const response = await fetch('/api/materiais');
+      const response = await fetch('http://localhost:8000/api/materiais');
       const data = await response.json();
       return data.map((material: any) => ({
         id: material.id,
@@ -156,11 +156,11 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
   // Exemplo de função para buscar operações
   const fetchOperacoes = async () => {
     try {
-      const response = await fetch('/api/operacoes');
+      const response = await fetch('http://localhost:8000/api/operacoes');
       const data = await response.json();
       return data.map((operacao: any) => ({
         id: operacao.id,
-        label: operacao.nome
+        label: operacao.operacao
       }));
     } catch (error) {
       console.error('Erro ao buscar operações:', error);
