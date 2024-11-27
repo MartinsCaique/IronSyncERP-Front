@@ -1,52 +1,80 @@
-import { FC, useState } from 'react';
-
+import { FC, useState, useEffect } from 'react';
 import { HiOutlineChevronUpDown } from "react-icons/hi2";
 
 interface Option {
-  value: string;
+  id: number;
   label: string;
 }
 
 type SelectProps = {
     title?: string;
-    value?: any;
+    value?: string | number;
     onChange: (value: string) => void;
+    fetchOptions: () => Promise<Option[]>;
 }
 
-const CustomSelect: FC<SelectProps> = ({ title ,value ,onChange }) => {
+const CustomSelect: FC<SelectProps> = ({ 
+  title, 
+  value, 
+  onChange, 
+  fetchOptions 
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+  const [options, setOptions] = useState<Option[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // opcoes para o selection
-  const options: Option[] = [
-    { value: 'option1', label: 'Opção 1' },
-    { value: 'option2', label: 'Opção 2' },
-    { value: 'option3', label: 'Opção 3' },
-  ];
+  useEffect(() => {
+    const loadOptions = async () => {
+      setIsLoading(true);
+      try {
+        const fetchedOptions = await fetchOptions();
+        setOptions(fetchedOptions);
+
+        // Se já tiver um valor selecionado, encontra a opção correspondente
+        if (value) {
+          const matchedOption = fetchedOptions.find(
+            option => option.id.toString() === value.toString()
+          );
+          if (matchedOption) {
+            setSelectedOption(matchedOption);
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao carregar opções:', error);
+      }
+      setIsLoading(false);
+    };
+
+    loadOptions();
+  }, [fetchOptions, value]);
 
   const handleOptionClick = (option: Option) => {
     setSelectedOption(option);
-    onChange(option.value);
+    onChange(option.id.toString()); // Converte para string
     setIsOpen(false);
   };
 
   return (
     <div className="relative w-full my-4 text-xs">
-        <label className='text-[.85rem] font-medium'>{title}</label>
-      {/* Botão do Select */}
+      <label className='text-[.85rem] font-medium'>{title}</label>
+      
       <button
         onClick={() => setIsOpen(!isOpen)}
+        disabled={isLoading}
         className="
-          w-full p-2 h-9 bg-white border border-gray-300 shadow-sm flex justify-between items-center focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+          w-full p-2 h-9 bg-white border border-gray-300 shadow-sm flex justify-between items-center 
+          focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none
+          disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <span className={selectedOption ? 'text-gray-900' : 'text-gray-400'}>
-          {selectedOption ? selectedOption.label : 'Selecione uma opção'}
+          {isLoading ? 'Carregando...' : 
+           selectedOption ? selectedOption.label : 'Selecione uma opção'}
         </span>
         <HiOutlineChevronUpDown className="h-5 w-5 text-gray-500" />
       </button>
 
-      {/* Dropdown */}
-      {isOpen && (
+      {isOpen && !isLoading && (
         <div className="
           absolute
           w-full
@@ -60,27 +88,33 @@ const CustomSelect: FC<SelectProps> = ({ title ,value ,onChange }) => {
           max-h-60
           overflow-auto
         ">
-          {options.map((option) => (
-            <div
-              key={option.value}
-              onClick={() => {
-                setSelectedOption(option);
-                setIsOpen(false);
-                handleOptionClick(option)
-              }}
-              className="
-                px-4
-                py-2
-                cursor-pointer
-                hover:bg-blue-50
-                transition-colors
-                duration-150
-                ease-in-out
-              "
-            >
-              {option.label}
+          {options.length === 0 ? (
+            <div className="px-4 py-2 text-gray-500">
+              Nenhuma opção disponível
             </div>
-          ))}
+          ) : (
+            options.map((option) => (
+              <div
+                key={option.id}
+                onClick={() => {
+                  setSelectedOption(option);
+                  setIsOpen(false);
+                  handleOptionClick(option)
+                }}
+                className="
+                  px-4
+                  py-2
+                  cursor-pointer
+                  hover:bg-blue-50
+                  transition-colors
+                  duration-150
+                  ease-in-out
+                "
+              >
+                {option.label}
+              </div>
+            ))
+          )}
         </div>
       )}
     </div>

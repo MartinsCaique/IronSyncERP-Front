@@ -31,7 +31,6 @@ type Recurso = {
   horas: number;
 };
 
-
 export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
   const [orcamentonome, setOrcamentoNome] = useState('');
   const [empresa, setEmpresa] = useState('');
@@ -110,6 +109,65 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
     }
   };
 
+  const fetchEmpresas = async () => {
+    try {
+      const response = await fetch('/api/empresas');
+      const data = await response.json();
+      return data.map((empresa: any) => ({
+        id: empresa.id,
+        label: empresa.nome
+      }));
+    } catch (error) {
+      console.error('Erro ao buscar empresas:', error);
+      return [];
+    }
+  };
+
+  // Exemplo de função para buscar contatos
+  const fetchContatos = async () => {
+    try {
+      const response = await fetch('/api/contatos');
+      const data = await response.json();
+      return data.map((contato: any) => ({
+        id: contato.id,
+        label: contato.nome
+      }));
+    } catch (error) {
+      console.error('Erro ao buscar contatos:', error);
+      return [];
+    }
+  };
+
+  // Exemplo de função para buscar materiais
+  const fetchMateriais = async () => {
+    try {
+      const response = await fetch('/api/materiais');
+      const data = await response.json();
+      return data.map((material: any) => ({
+        id: material.id,
+        label: material.nome
+      }));
+    } catch (error) {
+      console.error('Erro ao buscar materiais:', error);
+      return [];
+    }
+  };
+
+  // Exemplo de função para buscar operações
+  const fetchOperacoes = async () => {
+    try {
+      const response = await fetch('/api/operacoes');
+      const data = await response.json();
+      return data.map((operacao: any) => ({
+        id: operacao.id,
+        label: operacao.nome
+      }));
+    } catch (error) {
+      console.error('Erro ao buscar operações:', error);
+      return [];
+    }
+  };
+
   return (
     <div className="my-4 mx-8 bg-white">
       <div className="py-4 px-[3.2rem]">
@@ -143,6 +201,7 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                 title="*Empresa"
                 value={empresa}
                 onChange={(value) => setEmpresa(value)}
+                fetchOptions={fetchEmpresas}
               />
             </div>
             <div className="w-full">
@@ -150,6 +209,7 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                 title="*Contato"
                 value={contato}
                 onChange={(value) => setContato(value)}
+                fetchOptions={fetchContatos}
               />
             </div>
           </div>
@@ -160,7 +220,7 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                 <div className="py-4 flex">
                   <h1 className="text-2xl font-bold">Ferramenta</h1>
                   <div className="w-full flex justify-end items-center">
-                    
+
                     <button
                       type="button"
                       onClick={() => removeFerramenta(ferramentaIndex)}
@@ -203,7 +263,7 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                     <div className="py-4 flex">
                       <h1 className="text-2xl font-bold ml-7">Peça</h1>
                       <div className="w-full flex justify-end items-center mr-7">
-                        
+
                         <button
                           type="button"
                           onClick={() => removePeca(ferramentaIndex, pecaIndex)}
@@ -264,6 +324,7 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                             updatedFerramentas[ferramentaIndex].pecas[pecaIndex].material = value;
                             setFerramentas(updatedFerramentas);
                           }}
+                          fetchOptions={fetchMateriais}
                         />
                       </div>
                       <div className="w-[30%] mt-1">
@@ -271,7 +332,7 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                           type="number"
                           label="*Pesos em kg"
                           value={peca.peso}
-                          onChange={(e:ChangeEvent<HTMLInputElement>) => {
+                          onChange={(e: ChangeEvent<HTMLInputElement>) => {
                             const updatedFerramentas = [...ferramentas];
                             updatedFerramentas[ferramentaIndex].pecas[pecaIndex].peso = parseFloat(e.target.value);
                             setFerramentas(updatedFerramentas);
@@ -294,6 +355,7 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                                 updatedFerramentas[ferramentaIndex].pecas[pecaIndex].recursos[recursoIndex].operation = value;
                                 setFerramentas(updatedFerramentas);
                               }}
+                              fetchOptions={fetchOperacoes}
                             />
                           </div>
                           <div className="w-[30%] mt-1">

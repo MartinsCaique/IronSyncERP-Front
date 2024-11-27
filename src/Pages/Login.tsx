@@ -8,7 +8,7 @@ import imageLogin from '../Assets/login/imageLogin.jpg';
 // Interface para o payload de login
 interface LoginPayload {
     email: string;
-    senha: string;
+    password: string;
 }
 
 // Interface para a resposta da API
@@ -19,7 +19,7 @@ interface ApiResponse {
 
 export const Login = () => {
     const [email, setEmail] = useState<string>('');
-    const [senha, setSenha] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -38,7 +38,7 @@ export const Login = () => {
         setErrorMessage('');
 
         // Construir o payload do login
-        const payload: LoginPayload = { email, senha };
+        const payload: LoginPayload = { email, password };
 
         try {
             const response = await fetch('http://localhost:8000/api/admin/register', {
@@ -89,15 +89,15 @@ export const Login = () => {
                                 </div>
                             </div>
 
-                            {/* Input Senha */}
+                            {/* Input password */}
                             <div className='mt-2'>
                                 <p className='text-sm ml-1 mb-2 font-medium'>Senha</p>
                                 <div>
                                     <Input
-                                        value={senha}
+                                        value={password}
                                         type='password'
                                         placeholder='Coloque sua senha'
-                                        onChange={(e: ChangeEvent<HTMLInputElement>) => setSenha(e.target.value)}
+                                        onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                                         icon={<CiLock />}
                                     />
                                 </div>
