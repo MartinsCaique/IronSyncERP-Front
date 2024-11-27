@@ -41,7 +41,7 @@ export const Login = () => {
         const payload: LoginPayload = { email, password };
 
         try {
-            const response = await fetch('http://localhost:8000/api/admin/register', {
+            const response = await fetch('http://localhost:8000/api/admin/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
