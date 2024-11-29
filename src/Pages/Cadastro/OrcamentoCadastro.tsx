@@ -85,6 +85,19 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
   };
 
   const handleSubmit = async () => {
+    // Extrair pecas e operacoes de ferramentas
+    const pecas = ferramentas.flatMap(ferramenta =>
+      ferramenta.pecas.map(peca => ({
+        ...peca,
+        ferramenta_nome: ferramenta.nome
+      }))
+    );
+
+    const operacoes = ferramentas.flatMap(ferramenta =>
+      ferramenta.pecas.flatMap(peca =>
+        peca.operacoes.map(operacao => operacao)
+      )
+    );
     try {
       const response = await fetch('http://localhost:8000/api/orcamentos', {
         method: 'POST',
@@ -97,6 +110,8 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
           cliente_id,
           contato,
           ferramentas,
+          pecas,
+          operacoes
         }),
       });
 
