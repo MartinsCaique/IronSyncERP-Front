@@ -15,7 +15,7 @@ interface ModalProps {
 export const Modal: FC<ModalProps> = ({ children, onClose, onEdit, onSaveEdit, onCancelEdit, onDelete, isEditing }) => {
     return (
         <div className='fixed inset-0 bg-black/50 flex justify-center items-center z-50'>
-            <div className='bg-white w-full max-w-4xl md:h-[594px] p-6 rounded-lg flex flex-col'>
+            <div className='bg-white w-full max-w-4xl md:h-[594px] p-6 flex flex-col'>
                 {/* Botão de Fechar */}
                 <div className="flex justify-between items-center">
                     {/* Botão de Cancelar Edição (Superior Esquerdo) */}

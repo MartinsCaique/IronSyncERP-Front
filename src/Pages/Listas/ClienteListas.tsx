@@ -622,7 +622,7 @@ export const ClienteListas: FC<ClienteProps> = ({ title }) => {
                                     </div>
 
                                     {/* CNPJ e Inscrição Estadual */}
-                                    <div className='flex mt-2'>
+                                    <div className='flex mt-8'>
                                         {/* CNPJ */}
                                         <div>
                                             <p className='text-base font-medium text-gray-400/95 uppercase'>cnpj</p>

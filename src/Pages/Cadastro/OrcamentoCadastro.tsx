@@ -117,6 +117,8 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
 
       if (response.ok) {
         console.log('Orçamento enviado com sucesso!');
+        alert("Orçamento cadastrado com sucesso!")
+        window.location.reload();
       } else {
         console.error('Erro ao enviar o orçamento.');
       }
