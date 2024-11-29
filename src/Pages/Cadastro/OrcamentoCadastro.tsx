@@ -86,7 +86,7 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/orcamento', {
+      const response = await fetch('http://localhost:8000/api/orcamentos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, useCallback, useRef } from 'react';
 import { HiOutlineChevronUpDown } from "react-icons/hi2";
 
 interface Option {
@@ -23,37 +23,54 @@ const CustomSelect: FC<SelectProps> = ({
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [options, setOptions] = useState<Option[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const optionsLoadedRef = useRef(false);
+
+  const loadOptions = useCallback(async () => {
+    // Só carrega as opções se ainda não tiverem sido carregadas
+    if (optionsLoadedRef.current) return;
+
+    setIsLoading(true);
+    try {
+      const fetchedOptions = await fetchOptions();
+      setOptions(fetchedOptions);
+
+      // Se já tiver um valor selecionado, encontra a opção correspondente
+      if (value) {
+        const matchedOption = fetchedOptions.find(
+          option => option.id.toString() === value.toString()
+        );
+        if (matchedOption) {
+          setSelectedOption(matchedOption);
+        }
+      }
+      
+      // Marca como carregado para evitar múltiplas chamadas
+      optionsLoadedRef.current = true;
+    } catch (error) {
+      console.error('Erro ao carregar opções:', error);
+    }
+    setIsLoading(false);
+  }, [fetchOptions, value]);
 
   useEffect(() => {
-    const loadOptions = async () => {
-      setIsLoading(true);
-      try {
-        const fetchedOptions = await fetchOptions();
-        setOptions(fetchedOptions);
-
-        // Se já tiver um valor selecionado, encontra a opção correspondente
-        if (value) {
-          const matchedOption = fetchedOptions.find(
-            option => option.id.toString() === value.toString()
-          );
-          if (matchedOption) {
-            setSelectedOption(matchedOption);
-          }
-        }
-      } catch (error) {
-        console.error('Erro ao carregar opções:', error);
-      }
-      setIsLoading(false);
-    };
-
-    loadOptions();
-  }, [fetchOptions, value]);
+    // Só carrega as opções quando o dropdown for aberto
+    if (isOpen && !optionsLoadedRef.current) {
+      loadOptions();
+    }
+  }, [isOpen, loadOptions]);
 
   const handleOptionClick = (option: Option) => {
     setSelectedOption(option);
     onChange(option.id.toString()); // Converte para string
     setIsOpen(false);
   };
+
+  // Reseta o carregamento se o componente for desmontado e remontado
+  useEffect(() => {
+    return () => {
+      optionsLoadedRef.current = false;
+    };
+  }, []);
 
   return (
     <div className="relative w-full my-4 text-xs">
