@@ -2,22 +2,22 @@ import { FC, useState, useEffect, useCallback, useRef } from 'react';
 import { HiOutlineChevronUpDown } from "react-icons/hi2";
 
 interface Option {
-  id: number;
+  id: string | number;
   label: string;
 }
 
 type SelectProps = {
-    title?: string;
-    value?: string | number;
-    onChange: (value: string) => void;
-    fetchOptions: () => Promise<Option[]>;
+  title: string;
+  value: string;
+  onChange: (value: string) => void;
+  fetchOptions: () => Promise<Option[]>;
 }
 
-const CustomSelect: FC<SelectProps> = ({ 
-  title, 
-  value, 
-  onChange, 
-  fetchOptions 
+const CustomSelect: FC<SelectProps> = ({
+  title,
+  value,
+  onChange,
+  fetchOptions
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
@@ -43,7 +43,7 @@ const CustomSelect: FC<SelectProps> = ({
           setSelectedOption(matchedOption);
         }
       }
-      
+
       // Marca como carregado para evitar múltiplas chamadas
       optionsLoadedRef.current = true;
     } catch (error) {
@@ -75,7 +75,7 @@ const CustomSelect: FC<SelectProps> = ({
   return (
     <div className="relative w-full my-4 text-xs">
       <label className='text-[.85rem] font-medium'>{title}</label>
-      
+
       <button
         onClick={() => setIsOpen(!isOpen)}
         disabled={isLoading}
@@ -85,8 +85,8 @@ const CustomSelect: FC<SelectProps> = ({
           disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <span className={selectedOption ? 'text-gray-900' : 'text-gray-400'}>
-          {isLoading ? 'Carregando...' : 
-           selectedOption ? selectedOption.label : 'Selecione uma opção'}
+          {isLoading ? 'Carregando...' :
+            selectedOption ? selectedOption.label : 'Selecione uma opção'}
         </span>
         <HiOutlineChevronUpDown className="h-5 w-5 text-gray-500" />
       </button>

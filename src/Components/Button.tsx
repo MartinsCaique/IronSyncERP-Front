@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react'
 
 interface ButtonProps {
-    label: string,
+    label?: string,
     type?: any,
     handleFunction: any,
     bgColor?: string,

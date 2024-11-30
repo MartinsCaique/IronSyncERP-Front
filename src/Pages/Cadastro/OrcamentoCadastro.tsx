@@ -21,19 +21,19 @@ type Peca = {
   nome: string;
   quantidade: number;
   nota: string;
-  material: string;
+  material_id: string;
   peso: number;
-  recursos: Recurso[];
+  operacoes: Recurso[];
 };
 
 type Recurso = {
-  operation: string;
+  operacao_id: string;
   horas: number;
 };
 
 export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
-  const [orcamentonome, setOrcamentoNome] = useState('');
-  const [empresa, setEmpresa] = useState('');
+  const [nome, setOrcamentoNome] = useState('');
+  const [cliente_id, setClienteId] = useState('');
   const [contato, setContato] = useState('');
   const [ferramentas, setFerramentas] = useState<Ferramenta[]>([]);
 
@@ -56,9 +56,9 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
       nome: '',
       quantidade: 0,
       nota: '',
-      material: '',
+      material_id: '',
       peso: 0,
-      recursos: [],
+      operacoes: [],
     });
     setFerramentas(updatedFerramentas);
   };
@@ -71,8 +71,8 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
 
   const addRecurso = (ferramentaIndex: number, pecaIndex: number) => {
     const updatedFerramentas = [...ferramentas];
-    updatedFerramentas[ferramentaIndex].pecas[pecaIndex].recursos.push({
-      operation: '',
+    updatedFerramentas[ferramentaIndex].pecas[pecaIndex].operacoes.push({
+      operacao_id: '',
       horas: 0,
     });
     setFerramentas(updatedFerramentas);
@@ -80,27 +80,45 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
 
   const removeRecurso = (ferramentaIndex: number, pecaIndex: number, recursoIndex: number) => {
     const updatedFerramentas = [...ferramentas];
-    updatedFerramentas[ferramentaIndex].pecas[pecaIndex].recursos.splice(recursoIndex, 1);
+    updatedFerramentas[ferramentaIndex].pecas[pecaIndex].operacoes.splice(recursoIndex, 1);
     setFerramentas(updatedFerramentas);
   };
 
   const handleSubmit = async () => {
+    // Extrair pecas e operacoes de ferramentas
+    const pecas = ferramentas.flatMap(ferramenta =>
+      ferramenta.pecas.map(peca => ({
+        ...peca,
+        ferramenta_nome: ferramenta.nome
+      }))
+    );
+
+    const operacoes = ferramentas.flatMap(ferramenta =>
+      ferramenta.pecas.flatMap(peca =>
+        peca.operacoes.map(operacao => operacao)
+      )
+    );
     try {
       const response = await fetch('http://localhost:8000/api/orcamentos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         body: JSON.stringify({
-          nome: orcamentonome,
-          empresa,
+          nome: nome,
+          cliente_id,
           contato,
           ferramentas,
+          pecas,
+          operacoes
         }),
       });
 
       if (response.ok) {
         console.log('Orçamento enviado com sucesso!');
+        alert("Orçamento cadastrado com sucesso!")
+        window.location.reload();
       } else {
         console.error('Erro ao enviar o orçamento.');
       }
@@ -191,7 +209,7 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
           <Input
             type="text"
             label="*Nome Orçamento"
-            value={orcamentonome}
+            value={nome}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setOrcamentoNome(e.target.value)}
           />
 
@@ -199,8 +217,8 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
             <div className="w-full mr-4">
               <CustomSelect
                 title="*Empresa"
-                value={empresa}
-                onChange={(value) => setEmpresa(value)}
+                value={cliente_id}
+                onChange={(value) => setClienteId(value)}
                 fetchOptions={fetchEmpresas}
               />
             </div>
@@ -318,10 +336,10 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                       <div className="w-[60%] mr-4">
                         <CustomSelect
                           title="*Material"
-                          value={peca.material}
+                          value={peca.material_id}
                           onChange={(value) => {
                             const updatedFerramentas = [...ferramentas];
-                            updatedFerramentas[ferramentaIndex].pecas[pecaIndex].material = value;
+                            updatedFerramentas[ferramentaIndex].pecas[pecaIndex].material_id = value;
                             setFerramentas(updatedFerramentas);
                           }}
                           fetchOptions={fetchMateriais}
@@ -344,15 +362,15 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                     <div className="mt-5 ml-4">
                       <h1 className="text-2xl font-bold ml-7">Recursos</h1>
 
-                      {peca.recursos.map((recurso, recursoIndex) => (
+                      {peca.operacoes.map((recurso, recursoIndex) => (
                         <div key={recursoIndex} className="flex justify-center items-center">
                           <div className="w-[60%] mr-4">
                             <CustomSelect
                               title="*Operação"
-                              value={recurso.operation}
+                              value={recurso.operacao_id}
                               onChange={(value) => {
                                 const updatedFerramentas = [...ferramentas];
-                                updatedFerramentas[ferramentaIndex].pecas[pecaIndex].recursos[recursoIndex].operation = value;
+                                updatedFerramentas[ferramentaIndex].pecas[pecaIndex].operacoes[recursoIndex].operacao_id = value;
                                 setFerramentas(updatedFerramentas);
                               }}
                               fetchOptions={fetchOperacoes}
@@ -365,7 +383,7 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                               value={recurso.horas}
                               onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                 const updatedFerramentas = [...ferramentas];
-                                updatedFerramentas[ferramentaIndex].pecas[pecaIndex].recursos[recursoIndex].horas = parseInt(e.target.value);
+                                updatedFerramentas[ferramentaIndex].pecas[pecaIndex].operacoes[recursoIndex].horas = parseInt(e.target.value);
                                 setFerramentas(updatedFerramentas);
                               }}
                             />
