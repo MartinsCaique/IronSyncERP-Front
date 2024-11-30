@@ -383,7 +383,7 @@ export const OrcamentoCadastro: FC<OrcamentoProps> = ({ title }) => {
                               value={recurso.horas}
                               onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                 const updatedFerramentas = [...ferramentas];
-                                updatedFerramentas[ferramentaIndex].pecas[pecaIndex].operacoes[recursoIndex].horas = parseInt(e.target.value);
+                                updatedFerramentas[ferramentaIndex].pecas[pecaIndex].operacoes[recursoIndex].horas = Number(e.target.value);
                                 setFerramentas(updatedFerramentas);
                               }}
                             />
