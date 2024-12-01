@@ -112,7 +112,7 @@ export const Login = () => {
                                     size='text-lg'
                                     handleFunction={handleLogin}
                                 />
-                                <p className='mt-2 text-sm text-gray-400 font-medium'>Você já possui conta? <a className='text-blue-700 underline' href="#">Login</a></p>
+                                <p className='mt-2 text-sm text-gray-400 font-medium'>Não possui conta? <a className='text-blue-700 underline' href="#">Cadastre-se</a></p>
                             </div>
 
                             {/* Mensagem de erro */}
