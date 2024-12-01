@@ -1,16 +1,25 @@
 import { FC } from 'react'
 import { SideBar } from '../Components/Layout/SideBar';
 import { Link } from 'react-router-dom';
+
 import { IoPersonAddSharp } from 'react-icons/io5';
 import { BsBoxSeamFill, BsFillFileEarmarkSpreadsheetFill } from 'react-icons/bs';
 import { FaHammer } from 'react-icons/fa';
+import { FaRegClock } from "react-icons/fa6";
+
+import Chart from 'react-apexcharts'
+import BarChart from '../Components/BarChart';
 
 type DashboardProps = {
     path: string;
 }
 
+type DadosProps = {
+    dados: number;
+}
 
-export const Dashboard: FC<DashboardProps> = ({ path }) => {
+
+export const Dashboard: FC<DashboardProps & DadosProps> = ({ path, dados }) => {
 
     const pathParts = path
         .split('/')
@@ -80,6 +89,41 @@ export const Dashboard: FC<DashboardProps> = ({ path }) => {
                                     <BsFillFileEarmarkSpreadsheetFill className='mr-4' />
                                     Novo Orcamento
                                 </Link>
+                            </div>
+                        </div>
+
+
+                        <div className='grid grid-cols-2 justify-around'>
+                            <div className='bg-white m-4 grid grid-cols-2'>
+                                <div className='border-r'>
+                                    <div className='p-10 w-[100%] h-[50%] border-b'>
+                                        <div className='flex'>
+                                            <IoPersonAddSharp className='mr-4' />
+                                            <h1 className='mb-6'>Quantidade de Clientes</h1>
+                                        </div>
+                                        <p className=''>{dados}</p>
+                                    </div>
+                                    <div className='p-10 w-[100%]  h-[50%]'>
+                                        <h1 className='mb-6'>Quantidade de Materiais</h1>
+                                        <p>{dados}</p>
+                                    </div>
+                                </div>
+                                <div className=''>
+                                    <div className='p-10 w-[100%]  h-[50%] border-b'>
+                                        <h1 className='mb-6'>Quantidade de Recursos</h1>
+                                        <p>{dados}</p>
+                                    </div>
+                                    <div className='p-10 w-[100%]  h-[50%]'>
+                                        <h1 className='mb-6'>Quantidade de Orçamentos</h1>
+                                        <p>{dados}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div className='m-4 bg-white justify-center'>
+                                    <h1 className='ml-2 p-4  text-black text-xl font-semibold'>Horas de Máquina</h1>
+                                    <BarChart></BarChart>
+                                </div>
                             </div>
                         </div>
                     </div>

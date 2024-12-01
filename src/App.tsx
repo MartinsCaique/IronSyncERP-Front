@@ -19,7 +19,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path='/' element={<Dashboard path='Bem-vindo de volta/Usuario' />} />
+          <Route path='/' element={<Dashboard path='Bem-vindo de volta/Admin' dados={2} />} />
 
           {/* Rotas Cadastro */}
           <Route path='/cadastro' element={<Cadastro path='cadastros' />} >
