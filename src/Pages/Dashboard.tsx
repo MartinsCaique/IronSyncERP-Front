@@ -14,17 +14,28 @@ type DashboardProps = {
     path: string;
 }
 
-type DadosProps = {
-    dados: number;
-}
-
 type FetchDashboardData = {
     category: string;
     count: number
 }
 
+// banco de icones das categorias
+const categoryIcons: {[key: string]: JSX.Element} = {
+    "Clientes": <IoPersonAddSharp className='mr-4 text-5xl p-2 text-primary' />,
+    "Materiais": <BsBoxSeamFill className='mr-4 text-5xl p-2 text-primary' />,
+    "Operacoes": <FaHammer className='mr-4 text-5xl p-2 text-primary' />,
+    "Orcamentos": <BsFillFileEarmarkSpreadsheetFill className='mr-4 text-5xl p-2 text-primary' />
+}
 
-export const Dashboard: FC<DashboardProps & DadosProps> = ({ path, dados }) => {
+const categoryNames: {[key: string]: string} = {
+    Clientes: "Clientes",
+    Materiais: "Materiais",
+    Operacoes: "Recursos",
+    Orcamentos: "Orçamentos" 
+}
+
+
+export const Dashboard: FC<DashboardProps> = ({ path }) => {
 
     const [error, setError] = useState<string | null>(null)
     const [loading, setLoading] = useState(true)
@@ -40,9 +51,18 @@ export const Dashboard: FC<DashboardProps & DadosProps> = ({ path, dados }) => {
                 if(!response){
                     throw new Error('Falha na requisicao (Dashboard Data)')
                 }
+
+                
     
                 const data: FetchDashboardData[] = await response.json()
-                setDashboardData(data)
+
+                const transformedData = Object.entries(data).map(([key, value]) => ({
+                    category: key.charAt(0).toUpperCase() + key.slice(1),
+                    count: value as number
+                }));
+
+                console.log(transformedData)
+                setDashboardData(transformedData)
                 setLoading(false)
             }catch(e){
                 setError(e instanceof Error ? e.message : 'Erro desconhecido (Dashboard Data)')
@@ -55,6 +75,10 @@ export const Dashboard: FC<DashboardProps & DadosProps> = ({ path, dados }) => {
     const pathParts = path
         .split('/')
         .filter(part => part !== '');
+
+    if(error){
+        return <div>Erro ao carregar dados: {error}</div>;
+    }
 
     return (
         <div className='flex'>
@@ -128,12 +152,24 @@ export const Dashboard: FC<DashboardProps & DadosProps> = ({ path, dados }) => {
                                 <div className='m-4 p-2 border rounded bg-primary text-center text-white'>Carregando dados...</div>
                             ) : (
                                 <div className='m-4 flex justify-around h-[15vh]'>
-                                    <div className=' bg-white w-[24.5%]'>
+
+                                    {dashboardData.map((item, index)=>(
+                                        <div key={index} className='bg-white w-[24.5%]'>
+                                            <div className='m-2 p-4 pl-8 border h-[90%]'>
+                                                <h1 className='mb-6 text-black/50'>{categoryNames[item.category]} Cadastrados</h1>
+                                                <div className='flex items-center'>
+                                                    {categoryIcons[item.category] || <div className="text-black/50">Ícone indisponível</div>}
+                                                    <p className='text-4xl font-bold'>{item.count}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                    {/* <div className=' bg-white w-[24.5%]'>
                                         <div className='m-2 p-4 pl-8 border h-[90%]'>
                                             <h1 className='mb-6 text-black/50'>Clientes Cadastrados</h1>
                                             <div className='flex items-center'>
                                                 <IoPersonAddSharp className='mr-4 text-5xl p-2 text-primary' />
-                                                <p className='text-4xl font-bold'>{dashboardData[0].count}</p>
+                                                <p className='text-4xl font-bold'>{dashboardData[0]?.count}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -142,7 +178,7 @@ export const Dashboard: FC<DashboardProps & DadosProps> = ({ path, dados }) => {
                                             <h1 className='mb-6 text-black/50'>Materiais Cadastrados</h1>
                                             <div className='flex items-center'>
                                                 <BsBoxSeamFill className='mr-4 text-5xl p-2 text-primary' />
-                                                <p className='text-4xl font-bold'>{dashboardData[1].count}</p>
+                                                <p className='text-4xl font-bold'>{dashboardData[1]?.count}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -151,7 +187,7 @@ export const Dashboard: FC<DashboardProps & DadosProps> = ({ path, dados }) => {
                                             <h1 className='mb-6 text-black/50'>Recursos Cadastrados</h1>
                                             <div className='flex items-center'>
                                                 <FaHammer className='mr-4 text-5xl p-2 text-primary' />
-                                                <p className='text-4xl font-bold'>{dashboardData[0].count}</p>
+                                                <p className='text-4xl font-bold'>{dashboardData[2]?.category}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -160,10 +196,10 @@ export const Dashboard: FC<DashboardProps & DadosProps> = ({ path, dados }) => {
                                             <h1 className='mb-6 text-black/50'>Orçamentos Cadastrados</h1>
                                             <div className='flex items-center'>
                                                 <BsFillFileEarmarkSpreadsheetFill className='mr-4 text-5xl p-2 text-primary' />
-                                                <p className='text-4xl font-bold'>{dashboardData[0].count}</p>
+                                                <p className='text-4xl font-bold'>{dashboardData[3]?.count}</p>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             )}
                             <div className='h-[45vh] bg-white m-4'>

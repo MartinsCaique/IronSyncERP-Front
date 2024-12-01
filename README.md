@@ -49,4 +49,4 @@ export default tseslint.config({
 })
 ```
 
-### npm i, npm install react-router-dom, npm install react-icons, npm install jspdf html2canvas
+### npm i, npm install react-router-dom, npm install react-icons, npm install jspdf html2canvas, npm i --save react-apexcharts apexcharts
