@@ -48,7 +48,6 @@ const BarChart = () => {
   const options: ApexOptions = {
     chart: {
       type: 'bar',
-      height: 275
     },
     plotOptions: {
       bar: {
@@ -129,11 +128,12 @@ const BarChart = () => {
 
 
   return (
-    <div>
+    <div className='h-[100%] bg-white'>
+
       {/* Selection para escolher o mes */}
-      <div className='mb-4'>
-        <label htmlFor="month-select" className='mr-2'>Selecione o Mês:</label>
-        <select id="month-select" value={selectedMonth} onChange={handleMonthChange} className='border rounded p-2'>
+      <div className='mb-4 flex justify-between'>
+        <h1 className='ml-6 mt-4 p-4 text-black text-2xl font-semibold'>Horas de Máquina</h1>
+        <select id="month-select" value={selectedMonth} onChange={handleMonthChange} className='m-8 text-sm border rounded p-2'>
           <option value="">Mês Atual</option>
           {months.map((month)=>(
             <option key={month.value} value={month.value}>
@@ -145,16 +145,17 @@ const BarChart = () => {
 
       {/* Caso carregando exibe a div, caso nao exibe o grafico */}
       {loading ? (
-        <div>Carregando dados...</div>
+        <div className='ml-4 p-2 border rounded'>Carregando dados...</div>
       ) : (
-        <Chart
-          options={options}
-          series={series}
-          type='bar'
-          heigh={275}
-        >
-
-        </Chart>
+        <div className='h-[100%] bg-white'>
+          <Chart
+            options={options}
+            series={series}
+            type='bar'
+            height={'100%'}
+          >
+          </Chart>
+        </div>
       )}
     </div>
   )

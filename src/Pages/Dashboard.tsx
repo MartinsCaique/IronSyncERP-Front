@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { SideBar } from '../Components/Layout/SideBar';
 import { Link } from 'react-router-dom';
 
@@ -18,8 +18,38 @@ type DadosProps = {
     dados: number;
 }
 
+type FetchDashboardData = {
+    category: string;
+    count: number
+}
+
 
 export const Dashboard: FC<DashboardProps & DadosProps> = ({ path, dados }) => {
+
+    const [error, setError] = useState<string | null>(null)
+    const [loading, setLoading] = useState(true)
+    const [dashboardData, setDashboardData] = useState<FetchDashboardData[]>([])
+
+    // fetch para data do count das categorias que aparecem no dashboard
+    useEffect(()=>{
+        const fetchDashboardData = async ()=>{
+            try{
+                setLoading(true)
+                const response = await fetch('http://localhost:8000/api/dashboard/counts')
+    
+                if(!response){
+                    throw new Error('Falha na requisicao (Dashboard Data)')
+                }
+    
+                const data: FetchDashboardData[] = await response.json()
+                setDashboardData(data)
+                setLoading(false)
+            }catch(e){
+                setError(e instanceof Error ? e.message : 'Erro desconhecido (Dashboard Data)')
+                setLoading(false)
+            }
+        }
+    })
 
     const pathParts = path
         .split('/')
@@ -92,38 +122,51 @@ export const Dashboard: FC<DashboardProps & DadosProps> = ({ path, dados }) => {
                             </div>
                         </div>
 
-
-                        <div className='grid grid-cols-2 justify-around'>
-                            <div className='bg-white m-4 grid grid-cols-2'>
-                                <div className='border-r'>
-                                    <div className='p-10 w-[100%] h-[50%] border-b'>
-                                        <div className='flex'>
-                                            <IoPersonAddSharp className='mr-4' />
-                                            <h1 className='mb-6'>Quantidade de Clientes</h1>
+                        <div className='justify-around'>
+                            {loading ? (
+                                <div className='m-4 p-2 border rounded bg-primary text-center text-white'>Carregando dados...</div>
+                            ) : (
+                                <div className='m-4 flex justify-around h-[15vh]'>
+                                    <div className=' bg-white w-[24.5%]'>
+                                        <div className='m-2 p-4 pl-8 border h-[90%]'>
+                                            <h1 className='mb-6 text-black/50'>Clientes Cadastrados</h1>
+                                            <div className='flex items-center'>
+                                                <IoPersonAddSharp className='mr-4 text-5xl p-2 text-primary' />
+                                                <p className='text-4xl font-bold'>{dashboardData[0].count}</p>
+                                            </div>
                                         </div>
-                                        <p className=''>{dados}</p>
                                     </div>
-                                    <div className='p-10 w-[100%]  h-[50%]'>
-                                        <h1 className='mb-6'>Quantidade de Materiais</h1>
-                                        <p>{dados}</p>
+                                    <div className=' bg-white w-[24.5%]'>
+                                        <div className='m-2 p-4 pl-8 border h-[90%]'>
+                                            <h1 className='mb-6 text-black/50'>Materiais Cadastrados</h1>
+                                            <div className='flex items-center'>
+                                                <BsBoxSeamFill className='mr-4 text-5xl p-2 text-primary' />
+                                                <p className='text-4xl font-bold'>{dashboardData[1].count}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className=' bg-white w-[24.5%]'>
+                                        <div className='m-2 p-4 pl-8 border h-[90%]'>
+                                            <h1 className='mb-6 text-black/50'>Recursos Cadastrados</h1>
+                                            <div className='flex items-center'>
+                                                <FaHammer className='mr-4 text-5xl p-2 text-primary' />
+                                                <p className='text-4xl font-bold'>{dashboardData[0].count}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className=' bg-white w-[24.5%]'>
+                                        <div className='m-2 p-4 pl-8 border h-[90%]'>
+                                            <h1 className='mb-6 text-black/50'>Orçamentos Cadastrados</h1>
+                                            <div className='flex items-center'>
+                                                <BsFillFileEarmarkSpreadsheetFill className='mr-4 text-5xl p-2 text-primary' />
+                                                <p className='text-4xl font-bold'>{dashboardData[0].count}</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className=''>
-                                    <div className='p-10 w-[100%]  h-[50%] border-b'>
-                                        <h1 className='mb-6'>Quantidade de Recursos</h1>
-                                        <p>{dados}</p>
-                                    </div>
-                                    <div className='p-10 w-[100%]  h-[50%]'>
-                                        <h1 className='mb-6'>Quantidade de Orçamentos</h1>
-                                        <p>{dados}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div className='m-4 bg-white justify-center'>
-                                    <h1 className='ml-2 p-4  text-black text-xl font-semibold'>Horas de Máquina</h1>
-                                    <BarChart></BarChart>
-                                </div>
+                            )}
+                            <div className='h-[45vh] bg-white m-4'>
+                                <BarChart></BarChart>
                             </div>
                         </div>
                     </div>
