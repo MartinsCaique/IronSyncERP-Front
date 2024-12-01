@@ -49,7 +49,8 @@ export const Dashboard: FC<DashboardProps & DadosProps> = ({ path, dados }) => {
                 setLoading(false)
             }
         }
-    })
+        fetchDashboardData()
+    }, [])
 
     const pathParts = path
         .split('/')
