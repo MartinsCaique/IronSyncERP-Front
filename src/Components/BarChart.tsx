@@ -1,6 +1,7 @@
 import Chart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
 import { ChangeEvent, useEffect, useState } from 'react';
+import { FaSpinner } from 'react-icons/fa';
 
 
 // props do series do chart
@@ -145,7 +146,10 @@ const BarChart = () => {
 
       {/* Caso carregando exibe a div, caso nao exibe o grafico */}
       {loading ? (
-        <div className='ml-4 p-2 border rounded'>Carregando dados...</div>
+        <div className='ml-4 p-2 border rounded flex text-center justify-center items-center'>
+          <FaSpinner className='mr-2 animate-spin' />
+          Carregando dados...
+        </div>
       ) : (
         <div className='h-[100%] bg-white'>
           <Chart

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { IoPersonAddSharp } from 'react-icons/io5';
 import { BsBoxSeamFill, BsFillFileEarmarkSpreadsheetFill } from 'react-icons/bs';
 import { FaHammer } from 'react-icons/fa';
-import { FaRegClock } from "react-icons/fa6";
+import { FaSpinner } from "react-icons/fa";
 
 import Chart from 'react-apexcharts'
 import BarChart from '../Components/BarChart';
@@ -61,7 +61,6 @@ export const Dashboard: FC<DashboardProps> = ({ path }) => {
                     count: value as number
                 }));
 
-                console.log(transformedData)
                 setDashboardData(transformedData)
                 setLoading(false)
             }catch(e){
@@ -149,7 +148,10 @@ export const Dashboard: FC<DashboardProps> = ({ path }) => {
 
                         <div className='justify-around'>
                             {loading ? (
-                                <div className='m-4 p-2 border rounded bg-primary text-center text-white'>Carregando dados...</div>
+                                <div className='m-4 p-4 border rounded bg-primary text-center text-white flex justify-center items-center'>
+                                    <FaSpinner className='mr-2 animate-spin' />
+                                    Carregando dados...
+                                </div>
                             ) : (
                                 <div className='m-4 flex justify-around h-[15vh]'>
 
@@ -164,45 +166,9 @@ export const Dashboard: FC<DashboardProps> = ({ path }) => {
                                             </div>
                                         </div>
                                     ))}
-                                    {/* <div className=' bg-white w-[24.5%]'>
-                                        <div className='m-2 p-4 pl-8 border h-[90%]'>
-                                            <h1 className='mb-6 text-black/50'>Clientes Cadastrados</h1>
-                                            <div className='flex items-center'>
-                                                <IoPersonAddSharp className='mr-4 text-5xl p-2 text-primary' />
-                                                <p className='text-4xl font-bold'>{dashboardData[0]?.count}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className=' bg-white w-[24.5%]'>
-                                        <div className='m-2 p-4 pl-8 border h-[90%]'>
-                                            <h1 className='mb-6 text-black/50'>Materiais Cadastrados</h1>
-                                            <div className='flex items-center'>
-                                                <BsBoxSeamFill className='mr-4 text-5xl p-2 text-primary' />
-                                                <p className='text-4xl font-bold'>{dashboardData[1]?.count}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className=' bg-white w-[24.5%]'>
-                                        <div className='m-2 p-4 pl-8 border h-[90%]'>
-                                            <h1 className='mb-6 text-black/50'>Recursos Cadastrados</h1>
-                                            <div className='flex items-center'>
-                                                <FaHammer className='mr-4 text-5xl p-2 text-primary' />
-                                                <p className='text-4xl font-bold'>{dashboardData[2]?.category}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className=' bg-white w-[24.5%]'>
-                                        <div className='m-2 p-4 pl-8 border h-[90%]'>
-                                            <h1 className='mb-6 text-black/50'>Orçamentos Cadastrados</h1>
-                                            <div className='flex items-center'>
-                                                <BsFillFileEarmarkSpreadsheetFill className='mr-4 text-5xl p-2 text-primary' />
-                                                <p className='text-4xl font-bold'>{dashboardData[3]?.count}</p>
-                                            </div>
-                                        </div>
-                                    </div> */}
                                 </div>
                             )}
-                            <div className='h-[45vh] bg-white m-4'>
+                            <div className='h-[43vh] bg-white m-4'>
                                 <BarChart></BarChart>
                             </div>
                         </div>
